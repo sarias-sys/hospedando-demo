@@ -1,0 +1,873 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HospedAndo · Tu alojamiento en orden</title>
+<meta name="description" content="Conoce HospedAndo en menos de 10 minutos: reservas, recepción, tu propia página sin comisiones y precios claros.">
+<meta name="robots" content="noindex">
+<style>
+  :root{
+    --azul:#1B4965; --azul2:#22597a; --crema:#F2DDBF; --fondo:#F5F3EF; --claro:#E6EEF2;
+    --terra:#C8553D; --cobre:#C8744E; --cielo:#5FA8D3; --verde:#2E9E6B; --gris:#5E6B75; --linea:#DCD8D0;
+    --booking:#2D5BD1; --airbnb:#E0566B; --pagina:#2E9E6B; --wa:#D9932B;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{font-family:"Segoe UI","Helvetica Neue",Arial,sans-serif;color:var(--azul);background:var(--fondo);overflow:hidden;-webkit-font-smoothing:antialiased}
+  button,input,select{font:inherit;color:inherit}
+  button{cursor:pointer}
+  a{color:inherit}
+
+  /* ---------- marco ---------- */
+  .barra{position:fixed;top:0;left:0;right:0;height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;z-index:20;background:rgba(245,243,239,.92);backdrop-filter:blur(6px);border-bottom:1px solid var(--linea)}
+  .marca{font-weight:800;font-size:20px;letter-spacing:.2px}
+  .marca span{color:var(--terra)}
+  .herr{display:flex;gap:8px;align-items:center}
+  .herr button{background:none;border:1px solid var(--linea);border-radius:10px;padding:6px 10px;font-size:13px;color:var(--gris)}
+  .herr button:hover{border-color:var(--azul);color:var(--azul)}
+  .reloj{font-variant-numeric:tabular-nums;font-size:13px;color:var(--gris);min-width:54px;text-align:right}
+  .reloj.tarde{color:var(--terra);font-weight:700}
+  .progreso{position:fixed;top:56px;left:0;height:3px;background:var(--terra);transition:width .4s;z-index:21}
+
+  .escena{position:fixed;inset:56px 0 64px 0;overflow:hidden}
+  .dia{position:absolute;inset:0;padding:28px 6vw 20px;display:flex;flex-direction:column;opacity:0;transform:translateX(40px);pointer-events:none;transition:opacity .45s,transform .45s;overflow-y:auto}
+  .dia.activa{opacity:1;transform:none;pointer-events:auto}
+  .dia.antes{transform:translateX(-40px)}
+
+  .pie{position:fixed;bottom:0;left:0;right:0;height:64px;display:flex;align-items:center;justify-content:center;gap:18px;z-index:20}
+  .nav{width:44px;height:44px;border-radius:22px;border:none;background:var(--azul);color:#fff;font-size:20px;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(27,73,101,.25)}
+  .nav:disabled{opacity:.3;cursor:default}
+  .puntos{display:flex;gap:8px}
+  .puntos button{width:10px;height:10px;border-radius:5px;border:none;background:#C9D3DA;padding:0;transition:all .3s}
+  .puntos button.on{width:28px;background:var(--terra)}
+
+  .chico{font-size:12px;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;color:var(--cobre);margin-bottom:6px}
+  h1{font-size:clamp(34px,5.2vw,64px);line-height:1.04;font-weight:800}
+  h2{font-size:clamp(26px,3.3vw,40px);line-height:1.1;font-weight:800;margin-bottom:6px}
+  .sub{font-size:clamp(15px,1.5vw,19px);color:var(--gris);line-height:1.5;max-width:760px}
+  .pista{font-size:13px;color:var(--gris);margin-top:8px}
+  .pista b{color:var(--terra)}
+  .tarjeta{background:#fff;border-radius:18px;box-shadow:0 10px 30px rgba(27,73,101,.08);padding:20px}
+  .boton{display:inline-flex;align-items:center;gap:8px;background:var(--terra);color:#fff;font-weight:800;border:none;border-radius:14px;padding:14px 22px;font-size:16px;text-decoration:none;box-shadow:0 8px 20px rgba(200,85,61,.3);transition:transform .15s}
+  .boton:hover{transform:translateY(-2px)}
+  .boton.sec{background:#fff;color:var(--azul);border:2px solid var(--azul);box-shadow:none}
+  .boton.chico-b{padding:9px 14px;font-size:14px;border-radius:11px}
+  .chip{display:inline-block;padding:5px 12px;border-radius:20px;font-size:12.5px;font-weight:700;background:var(--claro);color:var(--azul)}
+  .ok{color:var(--verde);font-weight:800}
+
+  /* ---------- 1 portada ---------- */
+  .portada{background:linear-gradient(135deg,var(--azul) 0%,#123a52 100%);color:#fff;justify-content:center}
+  .portada .chico{color:var(--crema)}
+  .portada h1 em{font-style:normal;color:var(--crema)}
+  .portada .sub{color:#d9e6ee;margin-top:16px}
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:38px;max-width:1000px}
+  .kpi{background:rgba(255,255,255,.08);border:1px solid rgba(242,221,191,.3);border-radius:16px;padding:16px 18px;opacity:0;transform:translateY(14px)}
+  .activa .kpi{animation:sube .6s forwards}
+  .activa .kpi:nth-child(2){animation-delay:.12s}.activa .kpi:nth-child(3){animation-delay:.24s}.activa .kpi:nth-child(4){animation-delay:.36s}
+  .kpi b{display:block;font-size:30px;color:#fff}
+  .kpi span{font-size:13.5px;color:var(--crema)}
+  @keyframes sube{to{opacity:1;transform:none}}
+  .portada .sello{display:inline-block;margin-top:26px;background:var(--crema);color:var(--azul);font-weight:800;font-size:14px;padding:9px 16px;border-radius:22px}
+
+  /* ---------- 2 dolores ---------- */
+  .dolores{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:22px}
+  .giro{perspective:900px;height:170px;cursor:pointer}
+  .giro .in{position:relative;width:100%;height:100%;transition:transform .6s;transform-style:preserve-3d}
+  .giro.vuelta .in{transform:rotateY(180deg)}
+  .cara{position:absolute;inset:0;backface-visibility:hidden;border-radius:18px;padding:20px;display:flex;flex-direction:column;justify-content:center}
+  .cara.a{background:#fff;border-left:5px solid var(--terra);box-shadow:0 10px 30px rgba(27,73,101,.08)}
+  .cara.b{background:var(--azul);color:#fff;transform:rotateY(180deg)}
+  .cara .ico{font-size:26px;margin-bottom:8px}
+  .cara h3{font-size:17px;line-height:1.3}
+  .cara p{font-size:16px;line-height:1.45;color:#e8f0f5}
+  .cara.b b{color:var(--crema)}
+
+  /* ---------- 3 calendario ---------- */
+  .dos{display:grid;grid-template-columns:1.6fr 1fr;gap:24px;margin-top:18px;align-items:start}
+  .cal{overflow-x:auto}
+  .cal table{border-collapse:separate;border-spacing:0;width:100%;min-width:560px;font-size:13px}
+  .cal th{font-weight:700;color:var(--gris);padding:6px 4px;font-size:12px}
+  .cal th.hoy{color:var(--terra)}
+  .cal td{height:42px;border-top:1px solid var(--claro);position:relative;padding:0}
+  .cal td.u{font-weight:700;padding-right:10px;white-space:nowrap;font-size:13px;width:110px}
+  .res{position:absolute;top:6px;bottom:6px;left:2px;border-radius:9px;color:#fff;font-size:11.5px;font-weight:700;display:flex;align-items:center;padding:0 8px;white-space:nowrap;overflow:hidden;z-index:2;box-shadow:0 3px 8px rgba(0,0,0,.12)}
+  .res.nueva{animation:entra .7s}
+  @keyframes entra{from{transform:scale(.4);opacity:0}to{transform:none;opacity:1}}
+  .res.choque{animation:tiembla .5s}
+  @keyframes tiembla{20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+  .leyenda{display:flex;gap:14px;flex-wrap:wrap;margin-top:12px;font-size:12.5px;color:var(--gris)}
+  .leyenda i{display:inline-block;width:12px;height:12px;border-radius:4px;margin-right:5px;vertical-align:-1px}
+  .acciones{display:flex;flex-direction:column;gap:10px}
+  .acciones button{text-align:left;background:#fff;border:2px solid var(--claro);border-radius:14px;padding:12px 14px;font-weight:700;font-size:14.5px;transition:border-color .2s}
+  .acciones button:hover{border-color:var(--cielo)}
+  .acciones button small{display:block;font-weight:400;color:var(--gris);font-size:12.5px;margin-top:2px}
+  .aviso{margin-top:4px;border-radius:14px;padding:12px 14px;font-size:14px;line-height:1.4;display:none}
+  .aviso.mal{display:block;background:#FBE9E5;color:#8E3322;border:1px solid #F1C3B8}
+  .aviso.bien{display:block;background:#E5F5EC;color:#1E6B48;border:1px solid #B9E2CB}
+
+  /* ---------- 4 página ---------- */
+  .tres{display:grid;grid-template-columns:330px 1fr;gap:30px;margin-top:16px;align-items:start}
+  .cel{width:300px;height:min(560px,calc(100vh - 310px));min-height:380px;border-radius:38px;background:#111;padding:12px;box-shadow:0 20px 50px rgba(0,0,0,.25);margin:0 auto}
+  .pantalla{width:100%;height:100%;border-radius:28px;overflow-y:auto;overflow-x:hidden;background:#fff;display:flex;flex-direction:column;transition:background .4s;scrollbar-width:none;scroll-behavior:smooth}
+  .pantalla::-webkit-scrollbar{display:none}
+  .pantalla>*{flex-shrink:0}
+  .sitio-top{padding:16px 16px 0;transition:all .4s}
+  .sitio-nombre{font-weight:800;font-size:18px;line-height:1.15}
+  .sitio-ciudad{font-size:11.5px;opacity:.75;margin-top:3px}
+  .sitio-hero{margin:12px 16px;height:130px;border-radius:16px;display:flex;align-items:flex-end;padding:12px;color:#fff;font-weight:800;font-size:15px;transition:background .4s}
+  .buscador{margin:0 16px;border-radius:14px;border:1px solid #E3E3E3;padding:10px 12px;font-size:12px;display:grid;grid-template-columns:1fr 1fr;gap:6px}
+  .buscador div b{display:block;font-size:13px}
+  .disp{margin:12px 16px 0;display:flex;flex-direction:column;gap:8px}
+  .hab{border:1px solid #ECECEC;border-radius:12px;padding:10px 12px;display:flex;justify-content:space-between;align-items:center;font-size:12.5px}
+  .hab b{font-size:13px}
+  .hab button{border:none;border-radius:9px;padding:6px 10px;font-weight:700;font-size:12px;color:#fff}
+  .confirma{margin:14px 16px;border-radius:14px;padding:12px;font-size:12.5px;display:none;line-height:1.4}
+  .confirma.on{display:block;animation:entra .5s}
+  .estilos{display:flex;gap:8px;margin:10px 0 18px}
+  .estilos button{border:2px solid var(--claro);background:#fff;border-radius:12px;padding:8px 14px;font-weight:700;font-size:14px}
+  .estilos button.on{border-color:var(--azul);background:var(--azul);color:#fff}
+  .calc{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:10px}
+  .campo label{display:block;font-size:12.5px;color:var(--gris);margin-bottom:4px}
+  .campo input{width:100%;border:2px solid var(--claro);border-radius:12px;padding:10px 12px;font-size:16px;font-weight:700;background:#fff}
+  .campo input:focus{outline:none;border-color:var(--cielo)}
+  .resultado{margin-top:16px;background:var(--azul);color:#fff;border-radius:18px;padding:18px 20px;display:flex;gap:20px;align-items:center;flex-wrap:wrap}
+  .resultado .big{font-size:clamp(26px,3vw,38px);font-weight:800;color:var(--crema);white-space:nowrap}
+  .resultado p{font-size:14.5px;line-height:1.45;flex:1;min-width:220px}
+
+  /* ---------- 5 recorrido huésped ---------- */
+  .ruta{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
+  .ruta button{flex:1;min-width:150px;background:#fff;border:2px solid var(--claro);border-radius:16px;padding:14px;text-align:left;font-weight:800;font-size:14.5px;position:relative;transition:all .25s}
+  .ruta button small{display:block;font-weight:400;color:var(--gris);font-size:12px;margin-top:3px}
+  .ruta button .n{display:inline-flex;width:24px;height:24px;border-radius:12px;background:var(--claro);align-items:center;justify-content:center;font-size:12px;margin-bottom:6px}
+  .ruta button.on{border-color:var(--terra);box-shadow:0 8px 22px rgba(200,85,61,.18)}
+  .ruta button.on .n{background:var(--terra);color:#fff}
+  .ruta button.hecho .n{background:var(--verde);color:#fff}
+  .detalle{margin-top:18px;display:grid;grid-template-columns:1fr 1.2fr;gap:24px;align-items:center;min-height:240px}
+  .detalle .txt h3{font-size:24px;margin-bottom:8px}
+  .detalle .txt p{font-size:16px;line-height:1.55;color:#34495A}
+  .mock{background:#fff;border-radius:18px;box-shadow:0 10px 30px rgba(27,73,101,.1);padding:18px;font-size:14px;animation:entra .45s}
+  .mock .fila{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--claro)}
+  .mock .fila:last-child{border-bottom:none}
+  .burbuja{background:#E7F8EE;border-radius:14px 14px 14px 4px;padding:12px 14px;line-height:1.45;max-width:90%}
+  .firma{height:60px;border:1px dashed #b9c4cc;border-radius:10px;margin-top:10px;position:relative;overflow:hidden}
+  .firma svg{position:absolute;left:12px;top:0;width:300px;height:60px}
+  .firma path{stroke:var(--azul);stroke-width:2.4;fill:none;stroke-dasharray:400;stroke-dashoffset:400;animation:traza 1.8s .3s forwards}
+  @keyframes traza{to{stroke-dashoffset:0}}
+
+  /* ---------- 6 flow ---------- */
+  .chat{max-width:440px;background:#ECE5DD;border-radius:22px;padding:16px;height:min(430px,calc(100vh - 280px));min-height:320px;overflow-y:auto;display:flex;flex-direction:column;gap:8px;box-shadow:0 10px 30px rgba(27,73,101,.12)}
+  .msg{max-width:80%;padding:9px 12px;border-radius:12px;font-size:14px;line-height:1.4;animation:entra .3s;white-space:pre-line}
+  .msg.h{background:#fff;align-self:flex-start;border-top-left-radius:3px}
+  .msg.f{background:#DCF8C6;align-self:flex-end;border-top-right-radius:3px}
+  .msg small{display:block;font-size:11px;color:var(--gris);margin-bottom:2px;font-weight:700}
+  .escribe{align-self:flex-end;background:#DCF8C6;border-radius:12px;padding:10px 14px;display:none}
+  .escribe.on{display:block}
+  .escribe i{display:inline-block;width:6px;height:6px;border-radius:3px;background:#7a8a80;margin:0 2px;animation:pt 1s infinite}
+  .escribe i:nth-child(2){animation-delay:.15s}.escribe i:nth-child(3){animation-delay:.3s}
+  @keyframes pt{50%{opacity:.2}}
+
+  /* ---------- 7 precios ---------- */
+  .precios{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:14px;align-items:start}
+  .ctrl{margin-bottom:16px}
+  .ctrl .tit{font-weight:800;font-size:14.5px;margin-bottom:8px;display:flex;justify-content:space-between}
+  .ctrl .tit span{color:var(--terra)}
+  input[type=range]{width:100%;accent-color:var(--terra);height:28px}
+  .seg{display:flex;background:var(--claro);border-radius:12px;padding:4px;gap:4px}
+  .seg button{flex:1;border:none;background:none;border-radius:9px;padding:9px 6px;font-weight:700;font-size:13.5px;color:var(--gris)}
+  .seg button.on{background:#fff;color:var(--azul);box-shadow:0 2px 8px rgba(0,0,0,.08)}
+  .seg button small{display:block;font-weight:400;font-size:11px}
+  .marca-check{display:flex;gap:10px;align-items:center;font-size:14px;font-weight:600}
+  .marca-check input{width:20px;height:20px;accent-color:var(--terra)}
+  .total{background:var(--azul);color:#fff;border-radius:22px;padding:24px}
+  .total .plan{font-size:15px;color:var(--crema);font-weight:700}
+  .total .monto{font-size:clamp(38px,4.6vw,58px);font-weight:800;line-height:1.05;margin:6px 0 2px}
+  .total .monto small{font-size:18px;font-weight:600;color:#cfe0ea}
+  .total .linea{font-size:14px;color:#d9e6ee;line-height:1.55}
+  .total .gratis{margin-top:12px;background:var(--crema);color:var(--azul);border-radius:14px;padding:12px 14px;font-weight:800;font-size:15px}
+  .total .cuenta{margin-top:14px;border-top:1px solid rgba(255,255,255,.18);padding-top:12px;font-size:14.5px;line-height:1.5}
+  .total .cuenta b{color:var(--crema)}
+  .incluye{margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:4px 14px;font-size:13px;color:var(--gris)}
+  .incluye div::before{content:"✓ ";color:var(--verde);font-weight:800}
+  .letra{font-size:11.5px;color:var(--gris);margin-top:10px;line-height:1.45}
+
+  /* ---------- 8 empezar ---------- */
+  .pasos{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:22px}
+  .paso{background:#fff;border-radius:18px;padding:18px;box-shadow:0 10px 30px rgba(27,73,101,.07);opacity:0;transform:translateY(14px)}
+  .activa .paso{animation:sube .55s forwards}
+  .activa .paso:nth-child(2){animation-delay:.15s}.activa .paso:nth-child(3){animation-delay:.3s}.activa .paso:nth-child(4){animation-delay:.45s}
+  .paso .n{width:34px;height:34px;border-radius:17px;background:var(--terra);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;margin-bottom:10px}
+  .paso h3{font-size:17px;margin-bottom:4px}
+  .paso p{font-size:14px;color:#34495A;line-height:1.45}
+  .paso .t{font-size:12px;font-weight:800;color:var(--verde);margin-top:8px}
+  .claro{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px}
+  .claro .tarjeta h3{font-size:16px;margin-bottom:8px}
+  .claro .tarjeta li{font-size:14px;line-height:1.5;list-style:none;padding-left:22px;position:relative;margin-bottom:4px}
+  .claro .si li::before{content:"✓";position:absolute;left:0;color:var(--verde);font-weight:800}
+  .claro .no li::before{content:"○";position:absolute;left:0;color:var(--cobre);font-weight:800}
+
+  /* ---------- 9 cierre ---------- */
+  .cierre{background:linear-gradient(135deg,var(--azul) 0%,#123a52 100%);color:#fff;justify-content:center}
+  .cierre .chico{color:var(--crema)}
+  .cierre .sub{color:#d9e6ee;margin:12px 0 26px}
+  .cierre .boton.sec{background:transparent;color:#fff;border-color:var(--crema)}
+  .botones{display:flex;gap:14px;flex-wrap:wrap}
+  .faq{margin-top:30px;max-width:860px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .faq details{background:rgba(255,255,255,.07);border:1px solid rgba(242,221,191,.25);border-radius:14px;padding:12px 14px}
+  .faq summary{font-weight:700;font-size:14.5px;cursor:pointer;list-style:none}
+  .faq summary::after{content:" +";color:var(--crema)}
+  .faq details[open] summary::after{content:" –"}
+  .faq p{font-size:14px;color:#d9e6ee;margin-top:6px;line-height:1.45}
+  .confeti{position:fixed;inset:0;pointer-events:none;z-index:35}
+
+  /* ---------- notas y ajustes ---------- */
+  .notas{position:fixed;right:16px;bottom:76px;width:340px;max-height:46vh;overflow:auto;background:#fff;border:1px solid var(--linea);border-radius:16px;box-shadow:0 14px 40px rgba(0,0,0,.18);padding:14px 16px;font-size:13.5px;line-height:1.5;z-index:30;display:none}
+  .notas.on{display:block}
+  .notas b{color:var(--terra)}
+  .velo{position:fixed;inset:0;background:rgba(18,40,55,.5);z-index:40;display:none;align-items:center;justify-content:center;padding:20px}
+  .velo.on{display:flex}
+  .ajustes{background:#fff;border-radius:20px;padding:24px;width:min(480px,100%);box-shadow:0 20px 60px rgba(0,0,0,.3)}
+  .ajustes h3{font-size:20px;margin-bottom:4px}
+  .ajustes p{font-size:13px;color:var(--gris);margin-bottom:14px}
+  .ajustes .campo{margin-bottom:10px}
+  .ajustes .fin{display:flex;gap:10px;justify-content:flex-end;margin-top:14px;flex-wrap:wrap}
+  .enlace{font-size:12px;word-break:break-all;background:var(--claro);border-radius:10px;padding:8px 10px;margin-top:8px;color:var(--azul)}
+
+  @media (max-width:900px){
+    body{overflow:auto}
+    .dia{padding:20px 18px}
+    .kpis,.pasos{grid-template-columns:1fr 1fr}
+    .dolores{grid-template-columns:1fr}
+    .dos,.tres,.precios,.detalle,.claro,.faq{grid-template-columns:1fr}
+    .calc{grid-template-columns:1fr}
+    .notas{width:auto;left:16px}
+    .reloj,.herr .solo-pc{display:none}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.kpi,.paso{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<header class="barra">
+  <div class="marca">Hosped<span>Ando</span></div>
+  <div class="herr">
+    <span class="reloj" id="reloj" title="Tiempo de la presentación">0:00</span>
+    <button class="solo-pc" id="bNotas" title="Notas para quien presenta (N)">Notas</button>
+    <button id="bAjustes" title="Personalizar para el cliente (S)">Personalizar</button>
+    <button class="solo-pc" id="bPantalla" title="Pantalla completa (F)">⛶</button>
+  </div>
+</header>
+<div class="progreso" id="progreso"></div>
+
+<main class="escena" id="escena">
+
+  <!-- 1 · PORTADA -->
+  <section class="dia portada" data-nota="<b>30 s.</b> Saluda por su nombre. «Hoy te muestro en menos de 10 minutos cómo se vería <i>tu alojamiento</i> funcionando con HospedAndo». Señala los 4 datos sin leerlos todos.">
+    <div class="chico">Hola, <span data-v="nombre">bienvenido</span> 👋</div>
+    <h1>Así se vería <em data-v="aloj">tu alojamiento</em><br>en orden, en una sola herramienta.</h1>
+    <p class="sub">Reservas, recepción, cobros y tu propia página web. Desde el celular o el computador, sin instalar nada. Hecho en Colombia para hoteles, hostales, glampings y fincas.</p>
+    <div class="kpis">
+      <div class="kpi"><b>0 %</b><span>de comisión por reserva</span></div>
+      <div class="kpi"><b>1 minuto</b><span>para crear tu cuenta</span></div>
+      <div class="kpi"><b>25 minutos</b><span>para configurarlo con ayuda de la IA</span></div>
+      <div class="kpi"><b>15 días</b><span>gratis, sin tarjeta</span></div>
+    </div>
+    <div><span class="sello" id="selloPortada">Pruébalo 15 días gratis · sin tarjeta</span></div>
+  </section>
+
+  <!-- 2 · DOLORES -->
+  <section class="dia" data-nota="<b>1 min.</b> Pregunta: «¿cuál de estas te pasa hoy?». Deja que el cliente escoja y voltea esa tarjeta primero. No las voltees todas si no hace falta.">
+    <div class="chico">Lo que te resuelve</div>
+    <h2>¿Cuál de estas te pasa hoy?</h2>
+    <p class="sub">Toca una tarjeta para ver cómo lo resuelve HospedAndo.</p>
+    <div class="dolores">
+      <div class="giro"><div class="in"><div class="cara a"><div class="ico">📒</div><h3>Las reservas están en el cuaderno, el Excel y el WhatsApp</h3></div><div class="cara b"><p><b>Un solo calendario</b> con todas tus reservas y de dónde vino cada una. No deja cruzar dos reservas en la misma habitación.</p></div></div></div>
+      <div class="giro"><div class="in"><div class="cara a"><div class="ico">🔁</div><h3>Vendo por Booking y Airbnb y me da miedo una reserva doble</h3></div><div class="cara b"><p>Con el <b>channel manager</b>, las reservas de Booking y Airbnb llegan al mismo calendario, sin cruces.</p></div></div></div>
+      <div class="giro"><div class="in"><div class="cara a"><div class="ico">💸</div><h3>Pago mucha comisión por cada reserva</h3></div><div class="cara b"><p><b>Tu propia página</b> con motor de reservas. Lo que vendes ahí es 100 % tuyo: <b>cero comisión</b>.</p></div></div></div>
+      <div class="giro"><div class="in"><div class="cara a"><div class="ico">🧾</div><h3>El TRA, el SIRE y el RNT me quitan horas</h3></div><div class="cara b"><p>Los datos del huésped se toman <b>una sola vez</b> en el check-in. Los reportes te muestran lo pendiente y te avisamos antes de que venza el RNT.</p></div></div></div>
+      <div class="giro"><div class="in"><div class="cara a"><div class="ico">📲</div><h3>No doy abasto respondiendo el WhatsApp</h3></div><div class="cara b"><p>Con el plan Conversa, <b>Flow</b> responde a cualquier hora, mira qué está libre y cotiza con tus tarifas.</p></div></div></div>
+      <div class="giro"><div class="in"><div class="cara a"><div class="ico">🧹</div><h3>No sé qué habitación está limpia ni quién cobró qué</h3></div><div class="cara b"><p>Tablero del día con llegadas, salidas y limpieza. Cada pago queda con <b>quién lo anotó</b> y su referencia.</p></div></div></div>
+    </div>
+  </section>
+
+  <!-- 3 · CALENDARIO -->
+  <section class="dia" data-nota="<b>1 min 30 s.</b> Muestra los colores por origen. Toca «Llega una reserva de tu página» y después «Intentar una reserva cruzada»: ese «no se puede» es lo que más tranquiliza. Remata: «nunca más dos huéspedes para la misma cama».">
+    <div class="chico">Reservas y calendario</div>
+    <h2>Todo <span data-v="aloj">tu alojamiento</span> en un solo calendario</h2>
+    <p class="sub">Cada color dice de dónde vino la reserva. Las de tu página entran solas; las de teléfono o WhatsApp se anotan en segundos.</p>
+    <div class="dos">
+      <div class="tarjeta cal">
+        <table id="tablaCal"></table>
+        <div class="leyenda">
+          <span><i style="background:var(--pagina)"></i>Tu página</span>
+          <span><i style="background:var(--booking)"></i>Booking</span>
+          <span><i style="background:var(--airbnb)"></i>Airbnb</span>
+          <span><i style="background:var(--wa)"></i>WhatsApp / teléfono</span>
+        </div>
+      </div>
+      <div class="acciones">
+        <button id="cNueva">🌐 Llega una reserva de tu página<small>Entra sola, sin que hagas nada</small></button>
+        <button id="cChoque">⚠️ Intentar una reserva cruzada<small>Misma habitación, mismas noches</small></button>
+        <button id="cMover">↔️ Cambiar de habitación<small>Se mueve arrastrando, aquí con un toque</small></button>
+        <div class="aviso" id="cAviso"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 · PÁGINA PROPIA -->
+  <section class="dia" data-nota="<b>1 min 30 s.</b> Cambia los 3 estilos en vivo. Haz una reserva en el celular. Luego pregúntale cuántas reservas por Booking/Airbnb tiene al mes y su valor promedio, y escríbelo en la calculadora: el número de comisión siempre sorprende. Ajusta el % a lo que él paga.">
+    <div class="chico">Tu página web con motor de reservas</div>
+    <h2>Tus huéspedes reservan directo, <span class="ok">sin comisión</span></h2>
+    <div class="tres">
+      <div>
+        <div class="estilos" id="estilos">
+          <button data-e="clasico" class="on">Clásico</button><button data-e="moderno">Moderno</button><button data-e="natural">Natural</button>
+        </div>
+        <div class="cel"><div class="pantalla" id="pantalla">
+          <div class="sitio-top"><div class="sitio-nombre" data-v="aloj">Tu alojamiento</div><div class="sitio-ciudad"><span data-v="ciudad">Colombia</span> · Reserva directa</div></div>
+          <div class="sitio-hero" id="hero">Vive una escapada inolvidable</div>
+          <div class="buscador"><div>Llegada<b>vie 5 dic</b></div><div>Salida<b>dom 7 dic</b></div></div>
+          <div class="disp" id="disp"></div>
+          <div class="confirma" id="confirma"></div>
+        </div></div>
+      </div>
+      <div>
+        <p class="sub">Tres estilos con tu logo, tus colores y tus fotos. El huésped ve solo lo que está libre, con tus precios de temporada, agrega extras y confirma. La reserva queda apartada hasta el plazo de pago y, si no paga, se libera sola. Paga por transferencia, Nequi o en el alojamiento. También en inglés.</p>
+        <div class="tarjeta" style="margin-top:18px">
+          <div class="chico" style="margin-bottom:2px">Haz la cuenta con tus números</div>
+          <div class="calc">
+            <div class="campo"><label for="kRes">Reservas por plataformas al mes</label><input id="kRes" type="number" min="0" max="999" value="10"></div>
+            <div class="campo"><label for="kVal">Valor promedio por reserva ($)</label><input id="kVal" type="number" min="0" step="10000" value="350000"></div>
+            <div class="campo"><label for="kCom">Comisión que pagas hoy (%)</label><input id="kCom" type="number" min="0" max="40" step="1" value="15"></div>
+          </div>
+          <div class="resultado"><div class="big" id="kTotal">$0</div><p id="kTexto"></p></div>
+          <p class="letra">La comisión cambia según la plataforma y el acuerdo de cada alojamiento: ajústala a la tuya. Es un cálculo de ejemplo, no una promesa de ventas.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 · RECORRIDO DEL HUÉSPED -->
+  <section class="dia" data-nota="<b>1 min.</b> Recorre los 5 pasos tocándolos en orden. En el paso 2 resalta «firma desde el celular». En el 5: «nunca te pedimos la clave del SIRE».">
+    <div class="chico">Recepción y check-in en línea</div>
+    <h2>Del mensaje de bienvenida al reporte del SIRE</h2>
+    <p class="sub">Toca cada paso para ver el recorrido de un huésped.</p>
+    <div class="ruta" id="ruta"></div>
+    <div class="detalle" id="detalle"></div>
+  </section>
+
+  <!-- 6 · FLOW -->
+  <section class="dia" data-nota="<b>45 s.</b> Toca «Ver a Flow en acción» y deja que corra. Aclara: es el plan Conversa; en el plan Panel respondes tú y la plataforma te deja el mensaje listo. Las tarifas del chat son de ejemplo.">
+    <div class="chico">WhatsApp con inteligencia artificial · plan Conversa</div>
+    <h2>Flow responde por ti, incluso a las 11 de la noche</h2>
+    <div class="dos" style="grid-template-columns:auto 1fr">
+      <div>
+        <div class="chat" id="chat"><div class="escribe" id="escribe"><i></i><i></i><i></i></div></div>
+        <p class="letra">Conversación y tarifas de ejemplo. Flow usa las tarifas y la disponibilidad reales de tu alojamiento.</p>
+      </div>
+      <div>
+        <p class="sub">Flow mira la disponibilidad real de <b data-v="aloj">tu alojamiento</b>, cotiza con tus tarifas y te deja la reserva lista para que solo la confirmes. Si el huésped pide hablar con alguien, te pasa la conversación.</p>
+        <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap">
+          <button class="boton" id="bFlow">▶ Ver a Flow en acción</button>
+        </div>
+        <div class="tarjeta" style="margin-top:20px">
+          <b>¿Y si prefieres responder tú?</b>
+          <p style="font-size:14.5px;color:#34495A;margin-top:6px;line-height:1.5">Con el plan <b>Panel</b> respondes tú y la plataforma te deja los mensajes listos: confirmación, recordatorio de check-in, saldo pendiente y agradecimiento.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 · PRECIOS -->
+  <section class="dia" data-nota="<b>1 min 30 s.</b> Mueve las unidades a las suyas (ya vienen si lo personalizaste). Muestra mensual y luego anual («pagas 10, usas 12»). Remata con la línea «con N reservas directas al mes, el plan se paga solo». Si es de Caldas, aparece la oferta de 6 meses.">
+    <div class="chico">Planes y precios</div>
+    <h2>Pagas según tu tamaño, no según lo que vendes</h2>
+    <div class="precios">
+      <div class="tarjeta">
+        <div class="ctrl"><div class="tit">¿Cuántas habitaciones, cabañas o carpas? <span id="pUniTxt">8</span></div><input id="pUni" type="range" min="1" max="45" value="8"></div>
+        <div class="ctrl"><div class="tit">¿Quién responde tu WhatsApp?</div>
+          <div class="seg" id="pModo"><button data-m="panel" class="on">Panel<small>Respondo yo</small></button><button data-m="conversa">Conversa<small>Responde Flow con IA</small></button></div></div>
+        <div class="ctrl"><div class="tit">¿Cómo quieres pagar?</div>
+          <div class="seg" id="pPago"><button data-p="mes" class="on">Mensual<small>sin permanencia</small></button><button data-p="sem">Semestral<small>10 % menos</small></button><button data-p="anual">Anual<small>pagas 10, usas 12</small></button></div></div>
+        <div class="ctrl"><div class="tit">¿Cuántas propiedades? <span id="pPropTxt">1</span></div><input id="pProp" type="range" min="1" max="5" value="1"></div>
+        <label class="marca-check"><input type="checkbox" id="pCaldas"> Mi alojamiento está en Caldas</label>
+        <div class="incluye">
+          <div>Página con motor de reservas</div><div>Calendario sin cruces</div><div>Recepción y cobros</div><div>Check-in en línea</div>
+          <div>TRA, SIRE y RNT</div><div>Cupones y tarjetas de regalo</div><div>Limpieza y mantenimiento</div><div>Roles para tu equipo</div>
+          <div>Manual paso a paso</div><div>Soporte lun-vie 8:00-18:00</div>
+        </div>
+      </div>
+      <div class="total" id="pTotal"></div>
+    </div>
+  </section>
+
+  <!-- 8 · CÓMO EMPIEZAS -->
+  <section class="dia" data-nota="<b>45 s.</b> Los 4 pasos. Luego la tarjeta de «lo que todavía no hace»: decirlo de frente genera confianza. Pregunta: «¿te parece si lo creamos ahora mismo y cargamos tus habitaciones juntos?»">
+    <div class="chico">Cómo empiezas</div>
+    <h2>De cero a recibir reservas, en una tarde</h2>
+    <div class="pasos">
+      <div class="paso"><div class="n">1</div><h3>Crea tu cuenta</h3><p>Nombre, correo y contraseña. Empiezan tus 15 días gratis con todo incluido (menos Flow).</p><div class="t">1 minuto · sin tarjeta</div></div>
+      <div class="paso"><div class="n">2</div><h3>Configura</h3><p>La IA te ayuda con habitaciones, tarifas, políticas y fotos. O lo hacemos contigo en videollamada.</p><div class="t">unos 25 minutos</div></div>
+      <div class="paso"><div class="n">3</div><h3>Publica tu página</h3><p>Compártela en tu WhatsApp, Instagram y Google, y recibe reservas directas.</p><div class="t">un clic</div></div>
+      <div class="paso"><div class="n">4</div><h3>Elige tu plan</h3><p>Antes de que termine la prueba. Te avisamos el día 10 y el 14.</p><div class="t">sin permanencia</div></div>
+    </div>
+    <div class="claro">
+      <div class="tarjeta si"><h3>Lo que tienes desde el primer día</h3><ul>
+        <li>Funciona en el navegador del celular o del computador</li>
+        <li>Varias propiedades en una sola cuenta (15 % menos desde la segunda)</li>
+        <li>Español e inglés para tus huéspedes</li>
+        <li>Tus datos son tuyos: si no eliges plan, los guardamos 30 días</li></ul></div>
+      <div class="tarjeta no"><h3>Para que no haya sorpresas: lo que todavía no hace</h3><ul>
+        <li><b>Factura electrónica DIAN:</b> sigues con tu sistema actual y anotas el número de la factura en la salida.</li>
+        <li><b>Pago con tarjeta en la página:</b> hoy pagan por transferencia, Nequi o en el alojamiento. Tu datáfono sigue igual.</li></ul></div>
+    </div>
+  </section>
+
+  <!-- 9 · CIERRE -->
+  <section class="dia cierre" data-nota="<b>Cierre.</b> No preguntes «¿qué te pareció?». Pregunta: «¿la creamos ahora?». Toca el botón, que lo haga él desde su celular o compartiendo pantalla, y en esta misma llamada carguen las primeras habitaciones.">
+    <div class="chico">Empieza hoy</div>
+    <h1 style="font-size:clamp(32px,4.6vw,56px)">¿Creamos la cuenta de <span data-v="aloj" style="color:var(--crema)">tu alojamiento</span> ahora mismo?</h1>
+    <p class="sub">Toma un minuto y no pide tarjeta. En esta misma llamada cargamos juntos tus primeras habitaciones y tarifas.</p>
+    <div class="botones">
+      <a class="boton" id="ctaCrear" href="https://hoteles.desarrollandoando.com/crear-cuenta" target="_blank" rel="noopener">Crear mi cuenta gratis →</a>
+      <a class="boton sec" id="ctaAgendar" href="https://hoteles.desarrollandoando.com/agendar" target="_blank" rel="noopener">Prefiero agendar otra videollamada</a>
+    </div>
+    <div class="faq">
+      <details><summary>¿Sirve para mi glamping, finca u hostal?</summary><p>Sí. Cada carpa, cabaña o habitación tiene su espacio en el calendario y en tu página.</p></details>
+      <details><summary>¿Hay que instalar algo?</summary><p>No. Funciona en el navegador del celular o del computador.</p></details>
+      <details><summary>¿Me piden la clave del SIRE?</summary><p>Nunca. Los datos se toman en el check-in y el reporte te muestra lo pendiente.</p></details>
+      <details><summary>¿Qué pasa cuando termina la prueba?</summary><p>Si no eliges plan, el día 16 puedes ver tu información pero no cambiarla, y la página deja de recibir reservas. Guardamos tus datos 30 días.</p></details>
+      <details><summary>¿Hay permanencia?</summary><p>No en los planes mensuales. Pasas de Panel a Conversa cuando quieras.</p></details>
+      <details><summary>¿Y si tengo dudas después?</summary><p>Soporte de lunes a viernes de 8:00 a 18:00, manual paso a paso y hola@desarrollandoando.com.</p></details>
+    </div>
+  </section>
+
+</main>
+
+<footer class="pie">
+  <button class="nav" id="ant" aria-label="Anterior">‹</button>
+  <div class="puntos" id="puntos"></div>
+  <button class="nav" id="sig" aria-label="Siguiente">›</button>
+</footer>
+
+<aside class="notas" id="notas" aria-live="polite"></aside>
+
+<div class="velo" id="velo">
+  <div class="ajustes" role="dialog" aria-label="Personalizar">
+    <h3>Personaliza para tu cliente</h3>
+    <p>Lo que escribas aparece en las diapositivas. No se guarda en ningún servidor: solo vive en el enlace.</p>
+    <div class="campo"><label for="aNombre">Nombre de la persona</label><input id="aNombre" placeholder="Claudia"></div>
+    <div class="campo"><label for="aAloj">Nombre del alojamiento</label><input id="aAloj" placeholder="Glamping Villa Luna"></div>
+    <div class="campo"><label for="aUni">Habitaciones, cabañas o carpas</label><input id="aUni" type="number" min="1" max="45" placeholder="8"></div>
+    <div class="campo"><label for="aCiudad">Ciudad o municipio</label><input id="aCiudad" placeholder="Armenia"></div>
+    <div class="enlace" id="aEnlace"></div>
+    <div class="fin">
+      <button class="boton sec chico-b" id="aCopiar">Copiar enlace</button>
+      <button class="boton chico-b" id="aListo">Listo</button>
+    </div>
+  </div>
+</div>
+
+<canvas class="confeti" id="confeti"></canvas>
+
+<script>
+(() => {
+  "use strict";
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const peso = (n) => "$" + Math.round(n).toLocaleString("es-CO");
+
+  // ---------- Datos del cliente (solo en el enlace) ----------
+  const q = new URLSearchParams(location.search);
+  const datos = {
+    nombre: (q.get("n") || "").slice(0, 40),
+    aloj: (q.get("a") || "").slice(0, 60),
+    uni: Math.min(45, Math.max(1, parseInt(q.get("u"), 10) || 8)),
+    ciudad: (q.get("c") || "").slice(0, 40),
+  };
+  const CALDAS = ["manizales","aguadas","anserma","aranzazu","belalcazar","chinchina","filadelfia","la dorada","la merced","manzanares","marmato","marquetalia","marulanda","neira","norcasia","pacora","palestina","pensilvania","riosucio","risaralda","salamina","samana","san jose","supia","victoria","villamaria","viterbo","caldas"];
+  const normal = (t) => t.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").trim();
+  const esCaldas = (c) => { const x = normal(c); return !!x && CALDAS.some((m) => x === m || x.includes(m)); };
+
+  function pintarDatos() {
+    $$('[data-v="nombre"]').forEach((e) => (e.textContent = datos.nombre || "bienvenido"));
+    $$('[data-v="aloj"]').forEach((e) => (e.textContent = datos.aloj || "tu alojamiento"));
+    $$('[data-v="ciudad"]').forEach((e) => (e.textContent = datos.ciudad || "Colombia"));
+    $(".sitio-nombre").textContent = datos.aloj || "Tu alojamiento";
+    $("#pUni").value = datos.uni;
+    $("#pCaldas").checked = esCaldas(datos.ciudad);
+    $("#selloPortada").textContent = esCaldas(datos.ciudad)
+      ? "En Caldas: 6 meses gratis del plan Panel · 30 cupos"
+      : "Pruébalo 15 días gratis · sin tarjeta";
+    const utm = "utm_source=demo&utm_medium=presentacion";
+    $("#ctaCrear").href = "https://hoteles.desarrollandoando.com/crear-cuenta?" + utm;
+    $("#ctaAgendar").href = "https://hoteles.desarrollandoando.com/agendar?" + utm;
+    armarCalendario(); armarSitio(); precio();
+  }
+
+  // ---------- Navegación ----------
+  const dias = $$(".dia");
+  let actual = 0, inicio = null;
+  const puntos = $("#puntos");
+  dias.forEach((_, i) => {
+    const b = document.createElement("button");
+    b.setAttribute("aria-label", "Ir a la diapositiva " + (i + 1));
+    b.onclick = () => ir(i);
+    puntos.appendChild(b);
+  });
+  function ir(i) {
+    if (i < 0 || i >= dias.length) return;
+    if (inicio === null && i > 0) inicio = Date.now();
+    dias.forEach((d, k) => { d.classList.toggle("activa", k === i); d.classList.toggle("antes", k < i); });
+    $$("button", puntos).forEach((b, k) => b.classList.toggle("on", k === i));
+    actual = i;
+    $("#ant").disabled = i === 0; $("#sig").disabled = i === dias.length - 1;
+    $("#progreso").style.width = ((i + 1) / dias.length) * 100 + "%";
+    $("#notas").innerHTML = "<div class='chico'>Diapositiva " + (i + 1) + " de " + dias.length + "</div>" + (dias[i].dataset.nota || "");
+    try { history.replaceState(null, "", location.pathname + location.search + "#" + (i + 1)); } catch { /* archivo local */ }
+    if (i === dias.length - 1) setTimeout(confeti, 350);
+  }
+  $("#ant").onclick = () => ir(actual - 1);
+  $("#sig").onclick = () => ir(actual + 1);
+  document.addEventListener("keydown", (e) => {
+    if (e.target.matches("input,textarea,select")) return;
+    if ($("#velo").classList.contains("on")) { if (e.key === "Escape") cerrarAjustes(); return; }
+    if (["ArrowRight", "PageDown", " "].includes(e.key)) { e.preventDefault(); ir(actual + 1); }
+    else if (["ArrowLeft", "PageUp"].includes(e.key)) { e.preventDefault(); ir(actual - 1); }
+    else if (e.key === "Home") ir(0);
+    else if (e.key === "End") ir(dias.length - 1);
+    else if (e.key.toLowerCase() === "n") { e.preventDefault(); $("#notas").classList.toggle("on"); }
+    else if (e.key.toLowerCase() === "f") { e.preventDefault(); pantalla(); }
+    else if (e.key.toLowerCase() === "s") { e.preventDefault(); abrirAjustes(); }
+  });
+  let x0 = null;
+  $("#escena").addEventListener("touchstart", (e) => (x0 = e.touches[0].clientX), { passive: true });
+  $("#escena").addEventListener("touchend", (e) => {
+    if (x0 === null) return;
+    const dx = e.changedTouches[0].clientX - x0;
+    if (Math.abs(dx) > 60) ir(actual + (dx < 0 ? 1 : -1));
+    x0 = null;
+  });
+  setInterval(() => {
+    if (inicio === null) return;
+    const s = Math.floor((Date.now() - inicio) / 1000);
+    const r = $("#reloj");
+    r.textContent = Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0");
+    r.classList.toggle("tarde", s >= 540);
+  }, 1000);
+  function pantalla() {
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
+    else document.exitFullscreen?.();
+  }
+  $("#bPantalla").onclick = pantalla;
+  $("#bNotas").onclick = () => $("#notas").classList.toggle("on");
+
+  // ---------- 2 · Tarjetas ----------
+  $$(".giro").forEach((g) => (g.onclick = () => g.classList.toggle("vuelta")));
+
+  // ---------- 3 · Calendario ----------
+  const DIAS = ["Lun 1", "Mar 2", "Mié 3", "Jue 4", "Vie 5", "Sáb 6", "Dom 7"];
+  let reservas = [];
+  function nombresUnidades() {
+    const n = Math.min(6, datos.uni);
+    return Array.from({ length: n }, (_, i) => (datos.uni <= 5 ? "Cabaña " : "Hab. ") + (101 + i));
+  }
+  function armarCalendario() {
+    const uns = nombresUnidades();
+    reservas = [
+      { u: 0, d: 0, n: 2, o: "booking", t: "Booking · Ana" },
+      { u: 1, d: 1, n: 3, o: "pagina", t: "Tu página · Luis" },
+      { u: 0, d: 4, n: 2, o: "wa", t: "WhatsApp · Marta" },
+      { u: 2, d: 3, n: 4, o: "airbnb", t: "Airbnb · John" },
+    ].filter((r) => r.u < uns.length);
+    pintarCal(uns);
+    const a = $("#cAviso"); a.className = "aviso"; a.textContent = "";
+  }
+  const color = { pagina: "var(--pagina)", booking: "var(--booking)", airbnb: "var(--airbnb)", wa: "var(--wa)" };
+  function pintarCal(uns, marca) {
+    uns = uns || nombresUnidades();
+    const t = $("#tablaCal");
+    let h = "<tr><th></th>" + DIAS.map((d, i) => `<th class="${i === 4 ? "hoy" : ""}">${d}</th>`).join("") + "</tr>";
+    uns.forEach((u, ui) => {
+      h += `<tr><td class="u">${u}</td>`;
+      for (let d = 0; d < 7; d++) h += `<td data-u="${ui}" data-d="${d}"></td>`;
+      h += "</tr>";
+    });
+    t.innerHTML = h;
+    reservas.forEach((r, i) => {
+      const td = t.querySelector(`td[data-u="${r.u}"][data-d="${r.d}"]`);
+      if (!td) return;
+      const el = document.createElement("div");
+      el.className = "res" + (marca && marca.i === i ? " " + marca.c : "");
+      el.style.background = color[r.o];
+      el.style.width = `calc(${r.n * 100}% - 4px)`;
+      el.textContent = r.t;
+      td.appendChild(el);
+    });
+  }
+  const libre = (u, d, n) => !reservas.some((r) => r.u === u && d < r.d + r.n && r.d < d + n);
+  $("#cNueva").onclick = () => {
+    const uns = nombresUnidades();
+    const a = $("#cAviso");
+    for (let u = 0; u < uns.length; u++) for (let d = 0; d <= 5; d++) if (libre(u, d, 2)) {
+      reservas.push({ u, d, n: 2, o: "pagina", t: "Tu página · Nueva" });
+      pintarCal(uns, { i: reservas.length - 1, c: "nueva" });
+      a.className = "aviso bien";
+      a.innerHTML = `✅ <b>Nueva reserva desde tu página</b> en ${uns[u]}. Entró sola al calendario, sin comisión.`;
+      return;
+    }
+    a.className = "aviso bien"; a.textContent = "¡Lleno total esta semana! 🎉";
+  };
+  $("#cChoque").onclick = () => {
+    const uns = nombresUnidades();
+    const i = reservas.findIndex((r) => r.u === 0);
+    const a = $("#cAviso");
+    if (i < 0) return;
+    pintarCal(uns, { i, c: "choque" });
+    a.className = "aviso mal";
+    a.innerHTML = `🚫 <b>No se puede guardar:</b> ${uns[0]} ya está ocupada esas noches (${reservas[i].t}). HospedAndo no deja que dos huéspedes queden en la misma habitación.`;
+  };
+  $("#cMover").onclick = () => {
+    const uns = nombresUnidades();
+    const a = $("#cAviso");
+    for (let i = reservas.length - 1; i >= 0; i--) {
+      const r = reservas[i];
+      for (let u = 0; u < uns.length; u++) {
+        if (u === r.u) continue;
+        const otras = reservas.filter((_, k) => k !== i);
+        if (!otras.some((o) => o.u === u && r.d < o.d + o.n && o.d < r.d + r.n)) {
+          const de = uns[r.u]; r.u = u;
+          pintarCal(uns, { i, c: "nueva" });
+          a.className = "aviso bien";
+          a.innerHTML = `↔️ <b>${r.t}</b> pasó de ${de} a ${uns[u]}. Si la nueva estuviera ocupada, no te dejaría.`;
+          return;
+        }
+      }
+    }
+    a.className = "aviso mal"; a.textContent = "No hay otra habitación libre esas noches: no se puede mover.";
+  };
+
+  // ---------- 4 · Página propia ----------
+  const ESTILOS = {
+    clasico: { fondo: "#ffffff", texto: "#1B4965", hero: "linear-gradient(135deg,#1B4965,#5FA8D3)", btn: "#1B4965", font: "Georgia,serif" },
+    moderno: { fondo: "#111827", texto: "#ffffff", hero: "linear-gradient(135deg,#C8553D,#F2A65A)", btn: "#C8553D", font: "'Segoe UI',Arial,sans-serif" },
+    natural: { fondo: "#F4F1E8", texto: "#2F4A2E", hero: "linear-gradient(135deg,#2E6B3E,#9BC27D)", btn: "#2E6B3E", font: "'Segoe UI',Arial,sans-serif" },
+  };
+  let estilo = "clasico";
+  function armarSitio() {
+    const e = ESTILOS[estilo];
+    const p = $("#pantalla");
+    p.style.background = e.fondo; p.style.color = e.texto;
+    $(".sitio-top").style.fontFamily = e.font;
+    $("#hero").style.background = e.hero;
+    $(".buscador").style.borderColor = estilo === "moderno" ? "#374151" : "#E3E3E3";
+    const habs = datos.uni <= 5
+      ? [["Cabaña con jacuzzi", 380000], ["Cabaña familiar", 450000]]
+      : [["Habitación doble", 240000], ["Suite con balcón", 360000], ["Familiar", 420000]];
+    $("#disp").innerHTML = habs.map(([n, v]) =>
+      `<div class="hab" style="border-color:${estilo === "moderno" ? "#374151" : "#ECECEC"}"><div><b>${n}</b><br>${peso(v)} / noche</div><button style="background:${e.btn}" data-h="${n}" data-v="${v}">Reservar</button></div>`).join("");
+    $$("#disp button").forEach((b) => (b.onclick = () => {
+      const c = $("#confirma");
+      c.style.background = estilo === "moderno" ? "#1F2937" : "#E5F5EC";
+      c.innerHTML = `✅ <b>¡Reserva recibida!</b><br>${b.dataset.h} · 2 noches · ${peso(b.dataset.v * 2)}<br>Paga por transferencia o Nequi. Te apartamos la habitación hasta el plazo de pago.`;
+      c.classList.remove("on"); void c.offsetWidth; c.classList.add("on");
+      const pa = $("#pantalla"); pa.scrollTop = pa.scrollHeight;
+    }));
+    $("#confirma").classList.remove("on");
+  }
+  $$("#estilos button").forEach((b) => (b.onclick = () => {
+    $$("#estilos button").forEach((x) => x.classList.toggle("on", x === b));
+    estilo = b.dataset.e; armarSitio();
+  }));
+  function comision() {
+    const r = Math.max(0, +$("#kRes").value || 0), v = Math.max(0, +$("#kVal").value || 0), c = Math.max(0, Math.min(40, +$("#kCom").value || 0));
+    const mes = r * v * c / 100;
+    $("#kTotal").textContent = peso(mes) + " /mes";
+    $("#kTexto").innerHTML = mes > 0
+      ? `Es lo que hoy se va en comisiones. Al año son <b>${peso(mes * 12)}</b>. Cada reserva que pasa a tu página es plata que se queda contigo.`
+      : "Escribe tus números para ver cuánto se va en comisiones.";
+    precio();
+    return { r, v, c };
+  }
+  ["kRes", "kVal", "kCom"].forEach((id) => $("#" + id).addEventListener("input", comision));
+
+  // ---------- 5 · Recorrido ----------
+  const PASOS = [
+    { t: "Confirma la reserva", s: "Enlace por WhatsApp", h: "Le llega su enlace de check-in", p: "Con la reserva confirmada, el huésped recibe por WhatsApp el enlace para hacer su check-in desde el celular, antes de llegar.",
+      m: () => `<div class="burbuja">¡Hola Laura! 🌿 Tu reserva en <b>${datos.aloj || "tu alojamiento"}</b> está confirmada para el viernes 5 de diciembre. Haz tu check-in en 2 minutos aquí: <u>enlace de check-in</u></div>` },
+    { t: "Check-in en línea", s: "Datos y firma", h: "Llena sus datos y firma", p: "Escribe sus datos y los de sus acompañantes y firma la tarjeta de registro en la pantalla del celular, en español o en inglés.",
+      m: () => `<div class="fila"><span>Nombre</span><b>Laura Gómez</b></div><div class="fila"><span>Documento</span><b>CC •••• 4821</b></div><div class="fila"><span>Procedencia</span><b>Medellín</b></div><div class="fila"><span>Acompañantes</span><b>1</b></div><div class="firma"><svg viewBox="0 0 300 60"><path d="M10 40 C 40 10, 60 55, 90 30 S 140 15, 160 40 S 220 50, 240 20 S 280 35, 290 30"/></svg></div>` },
+    { t: "Llega", s: "Solo la llave", h: "Al llegar, solo le das la llave", p: "Ya tienes todo: datos, firma y lo que falta por pagar. Recepción ve en el tablero del día quién llega y quién sale.",
+      m: () => `<div class="fila"><span>🟢 Llegadas hoy</span><b>3</b></div><div class="fila"><span>🔵 Salidas hoy</span><b>2</b></div><div class="fila"><span>Check-in en línea hecho</span><b class="ok">3 de 3</b></div><div class="fila"><span>Saldo pendiente</span><b>${peso(240000)}</b></div>` },
+    { t: "Cobra y sale", s: "Cuenta y limpieza", h: "Cobras y la habitación pasa a limpieza", p: "Cada pago queda en la cuenta del huésped con su medio (efectivo, datáfono, transferencia o Nequi), su referencia y quién lo anotó. Al salir, la habitación queda para limpieza.",
+      m: () => `<div class="fila"><span>Anticipo · Nequi</span><b>${peso(240000)}</b></div><div class="fila"><span>Saldo · Datáfono</span><b>${peso(240000)}</b></div><div class="fila"><span>Total pagado</span><b class="ok">${peso(480000)} ✓</b></div><div class="fila"><span>Habitación 101</span><b>🧹 Por limpiar</b></div>` },
+    { t: "Reportes", s: "TRA · SIRE · RNT", h: "Los reportes ya están listos", p: "Los datos del check-in alimentan el TRA y el SIRE: ves lo pendiente y lo exportas a Excel. Nunca te pedimos tu clave del SIRE. Y te avisamos antes de que venza el RNT.",
+      m: () => `<div class="fila"><span>TRA de noviembre</span><b class="ok">Listo para exportar</b></div><div class="fila"><span>SIRE · extranjeros</span><b>1 pendiente</b></div><div class="fila"><span>RNT</span><b>Vence el 31 mar · te avisamos</b></div>` },
+  ];
+  let paso = 0;
+  function pintarRuta() {
+    $("#ruta").innerHTML = PASOS.map((x, i) =>
+      `<button class="${i === paso ? "on" : i < paso ? "hecho" : ""}" data-i="${i}"><span class="n">${i < paso ? "✓" : i + 1}</span><br>${x.t}<small>${x.s}</small></button>`).join("");
+    $$("#ruta button").forEach((b) => (b.onclick = () => { paso = +b.dataset.i; pintarRuta(); }));
+    const x = PASOS[paso];
+    $("#detalle").innerHTML = `<div class="txt"><h3>${x.h}</h3><p>${x.p}</p>${paso < PASOS.length - 1 ? `<button class="boton chico-b" style="margin-top:14px" id="sigPaso">Siguiente paso →</button>` : ""}</div><div class="mock">${x.m()}</div>`;
+    const s = $("#sigPaso"); if (s) s.onclick = () => { paso++; pintarRuta(); };
+  }
+
+  // ---------- 6 · Flow ----------
+  const CHAT = [
+    ["h", "Huésped · 11:42 p. m.", "Hola, ¿tienen disponibilidad para 2 personas del 12 al 14 de diciembre?"],
+    ["f", "Flow · 11:42 p. m.", () => `¡Hola! 🌿 Sí, en ${datos.aloj || "nuestro alojamiento"} tenemos libre para esas fechas:\n• Habitación doble: $240.000 la noche\n• Suite con balcón: $360.000 la noche\n¿Cuál te gustaría?`],
+    ["h", "Huésped · 11:43 p. m.", "La suite. ¿Incluye desayuno?"],
+    ["f", "Flow · 11:43 p. m.", "Sí, incluye desayuno para 2 ☕ Serían 2 noches por $720.000. ¿Te la reservo? Solo necesito tu nombre completo."],
+    ["h", "Huésped · 11:44 p. m.", "Sí, a nombre de Laura Gómez."],
+    ["f", "Flow · 11:44 p. m.", "¡Listo, Laura! ✅ Le dejé tu reserva al equipo: mañana a primera hora te la confirman y te envían los datos para el pago."],
+  ];
+  let corriendo = false;
+  async function verFlow() {
+    if (corriendo) return; corriendo = true;
+    const chat = $("#chat"), esc = $("#escribe");
+    $$(".msg", chat).forEach((m) => m.remove());
+    const espera = (ms) => new Promise((r) => setTimeout(r, ms));
+    for (const [tipo, quien, texto] of CHAT) {
+      if (tipo === "f") { esc.classList.add("on"); chat.appendChild(esc); chat.scrollTop = chat.scrollHeight; await espera(1300); esc.classList.remove("on"); }
+      else await espera(700);
+      const m = document.createElement("div");
+      m.className = "msg " + tipo;
+      m.innerHTML = `<small>${quien}</small>`;
+      m.appendChild(document.createTextNode(typeof texto === "function" ? texto() : texto));
+      chat.insertBefore(m, esc);
+      chat.scrollTop = chat.scrollHeight;
+    }
+    corriendo = false;
+  }
+  $("#bFlow").onclick = verFlow;
+
+  // ---------- 7 · Precios ----------
+  const PLANES = [
+    { n: "Esencial", min: 1, max: 5, panel: 149000, conversa: 299000 },
+    { n: "Plus", min: 6, max: 10, panel: 199000, conversa: 349000 },
+    { n: "Pro", min: 11, max: 20, panel: 299000, conversa: 449000 },
+    { n: "Grupo", min: 21, max: 40, panel: 599000, conversa: 699000 },
+  ];
+  const CONVERSACIONES = 200000; // en Conversa, siempre mes a mes
+  let modo = "panel", pago = "mes";
+  $$("#pModo button").forEach((b) => (b.onclick = () => { modo = b.dataset.m; $$("#pModo button").forEach((x) => x.classList.toggle("on", x === b)); precio(); }));
+  $$("#pPago button").forEach((b) => (b.onclick = () => { pago = b.dataset.p; $$("#pPago button").forEach((x) => x.classList.toggle("on", x === b)); precio(); }));
+  ["pUni", "pProp"].forEach((id) => $("#" + id).addEventListener("input", precio));
+  $("#pCaldas").addEventListener("change", precio);
+
+  function precio() {
+    const u = +$("#pUni").value, props = +$("#pProp").value, caldas = $("#pCaldas").checked;
+    $("#pUniTxt").textContent = u > 40 ? "más de 40" : u;
+    $("#pPropTxt").textContent = props;
+    const caja = $("#pTotal");
+    const plan = PLANES.find((p) => u >= p.min && u <= p.max);
+    if (!plan) {
+      caja.innerHTML = `<div class="plan">Más de 40 unidades</div><div class="monto" style="font-size:34px">Te armamos una propuesta</div><p class="linea">Para alojamientos grandes cotizamos según tus propiedades y tu operación. Lo vemos al final de esta llamada.</p>`;
+      return;
+    }
+    if (modo === "conversa" && props > 1) {
+      caja.innerHTML = `<div class="plan">Plan ${plan.n} · Conversa · ${props} propiedades</div><div class="monto" style="font-size:34px">Te lo cotizamos</div><p class="linea">Con Flow en varias propiedades armamos el precio según cuántas conversaciones necesitas. Con Panel ya ves el precio exacto: cambia arriba a «Panel».</p>`;
+      return;
+    }
+    const lista = modo === "panel" ? plan.panel : plan.conversa;
+    const fija = modo === "conversa" ? CONVERSACIONES : 0;       // no tiene descuento por periodo
+    const base = lista - fija;                                     // parte con descuento
+    const factor = pago === "sem" ? 0.9 : pago === "anual" ? 10 / 12 : 1;
+    // Desde la 2.ª propiedad, 15 % menos en cada una (Panel; mismo tamaño)
+    const multiProp = 1 + (props - 1) * 0.85;
+    const mensual = (base * factor + fija) * multiProp;
+    const meses = pago === "sem" ? 6 : pago === "anual" ? 12 : 1;
+    const ahorro = lista * multiProp - mensual;
+    const alDia = mensual / 30;
+
+    let h = `<div class="plan">Plan ${plan.n} (${plan.min}–${plan.max} unidades) · ${modo === "panel" ? "Panel" : "Conversa"}${props > 1 ? ` · ${props} propiedades` : ""}</div>`;
+    h += `<div class="monto">${peso(mensual)}<small> al mes</small></div>`;
+    h += `<p class="linea">≈ <b>${peso(alDia)} al día</b>. Cero comisión por reserva.</p>`;
+    if (pago === "sem") h += `<p class="linea">En 6 meses pagas ${peso(mensual * 6)} en total · ahorras ${peso(ahorro * 6)}.</p>`;
+    if (pago === "anual") h += `<p class="linea">En el año pagas ${peso(base * 10 * multiProp + fija * 12 * multiProp)} en total (pagas 10 meses, usas 12) · ahorras ${peso(ahorro * 12)}.</p>`;
+    if (modo === "conversa") h += `<p class="linea">Incluye 500 conversaciones al mes con Flow y su configuración gratis. Conversación adicional: $400.${pago !== "mes" ? " Las conversaciones ($200.000) se pagan siempre mes a mes." : ""}</p>`;
+    if (props > 1) h += `<p class="linea">Desde la 2.ª propiedad, 15 % menos en cada una (calculado con propiedades del mismo tamaño).</p>`;
+    if (caldas && modo === "panel") h += `<div class="gratis">🎁 En Caldas: los primeros 6 meses del plan Panel son gratis. Son 30 cupos y los verificamos contigo.</div>`;
+    else if (caldas && modo === "conversa") h += `<div class="gratis">🎁 En Caldas tienes 6 meses gratis del plan Panel (Conversa no entra en la oferta).</div>`;
+    else h += `<div class="gratis">🎁 Empiezas con 15 días gratis, sin tarjeta${modo === "conversa" ? " (la prueba trae todo menos Flow)" : ""}.</div>`;
+
+    // Con cuántas reservas directas se paga el plan (usa los números de la calculadora de comisiones)
+    const v = Math.max(0, +$("#kVal").value || 0), c = Math.max(0, +$("#kCom").value || 0);
+    const porReserva = v * c / 100;
+    if (porReserva > 0) {
+      const n = Math.max(1, Math.ceil(mensual / porReserva));
+      h += `<div class="cuenta">Con tus números: cada reserva directa te ahorra ${peso(porReserva)} de comisión. Con <b>${n} ${n === 1 ? "reserva directa" : "reservas directas"} al mes</b>, el plan se paga solo.</div>`;
+    }
+    h += `<p class="letra" style="color:#bcd0dc">Precios mensuales en pesos colombianos. Sin permanencia en los planes mensuales.</p>`;
+    caja.innerHTML = h;
+  }
+
+  // ---------- Ajustes (personalizar) ----------
+  function consulta() {
+    const p = new URLSearchParams();
+    if (datos.nombre) p.set("n", datos.nombre);
+    if (datos.aloj) p.set("a", datos.aloj);
+    if (datos.uni) p.set("u", datos.uni);
+    if (datos.ciudad) p.set("c", datos.ciudad);
+    return p.toString() ? "?" + p : "";
+  }
+  const enlace = () => location.href.split(/[?#]/)[0] + consulta();
+  function abrirAjustes() {
+    $("#aNombre").value = datos.nombre; $("#aAloj").value = datos.aloj;
+    $("#aUni").value = datos.uni; $("#aCiudad").value = datos.ciudad;
+    $("#aEnlace").textContent = enlace();
+    $("#velo").classList.add("on"); $("#aNombre").focus();
+  }
+  function leerAjustes() {
+    datos.nombre = $("#aNombre").value.trim().slice(0, 40);
+    datos.aloj = $("#aAloj").value.trim().slice(0, 60);
+    datos.uni = Math.min(45, Math.max(1, parseInt($("#aUni").value, 10) || 8));
+    datos.ciudad = $("#aCiudad").value.trim().slice(0, 40);
+    $("#aEnlace").textContent = enlace();
+  }
+  function cerrarAjustes() {
+    leerAjustes();
+    try { history.replaceState(null, "", location.pathname + consulta() + "#" + (actual + 1)); } catch { /* archivo local */ }
+    $("#velo").classList.remove("on"); pintarDatos();
+  }
+  $$("#velo input").forEach((i) => i.addEventListener("input", leerAjustes));
+  $("#bAjustes").onclick = abrirAjustes;
+  $("#aListo").onclick = cerrarAjustes;
+  $("#velo").addEventListener("click", (e) => { if (e.target.id === "velo") cerrarAjustes(); });
+  $("#aCopiar").onclick = async () => {
+    leerAjustes();
+    try { await navigator.clipboard.writeText(enlace()); $("#aCopiar").textContent = "¡Copiado!"; }
+    catch { $("#aCopiar").textContent = "Cópialo de arriba"; }
+    setTimeout(() => ($("#aCopiar").textContent = "Copiar enlace"), 1800);
+  };
+  $("#velo").addEventListener("keydown", (e) => { if (e.key === "Enter") cerrarAjustes(); });
+
+  // ---------- Confeti del cierre ----------
+  function confeti() {
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const cv = $("#confeti"), cx = cv.getContext("2d");
+    cv.width = innerWidth; cv.height = innerHeight;
+    const cols = ["#F2DDBF", "#C8553D", "#5FA8D3", "#2E9E6B", "#ffffff"];
+    const ps = Array.from({ length: 140 }, () => ({
+      x: Math.random() * cv.width, y: -20 - Math.random() * cv.height * .4,
+      r: 4 + Math.random() * 5, vy: 2 + Math.random() * 3, vx: -1.5 + Math.random() * 3,
+      c: cols[Math.floor(Math.random() * cols.length)], a: Math.random() * 6,
+    }));
+    let f = 0;
+    (function cuadro() {
+      cx.clearRect(0, 0, cv.width, cv.height);
+      ps.forEach((p) => { p.y += p.vy; p.x += p.vx; p.a += .1; cx.fillStyle = p.c; cx.save(); cx.translate(p.x, p.y); cx.rotate(p.a); cx.fillRect(-p.r / 2, -p.r / 2, p.r, p.r * 1.6); cx.restore(); });
+      if (++f < 200) requestAnimationFrame(cuadro); else cx.clearRect(0, 0, cv.width, cv.height);
+    })();
+  }
+
+  // ---------- Inicio ----------
+  pintarDatos(); comision(); pintarRuta();
+  const h = parseInt(location.hash.slice(1), 10);
+  ir(h >= 1 && h <= dias.length ? h - 1 : 0);
+})();
+</script>
+</body>
+</html>
