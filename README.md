@@ -1,6 +1,6 @@
 # Presentación de HospedAndo para demos
 
-Presentación interactiva de unos 8 a 9 minutos para mostrar HospedAndo a un alojamiento durante la videollamada.
+Presentación interactiva de unos 9 a 10 minutos para mostrar HospedAndo a un alojamiento durante la videollamada.
 Publicada en https://sarias-sys.github.io/hospedando-demo/
 
 ## Cómo usarla
@@ -18,8 +18,9 @@ Publicada en https://sarias-sys.github.io/hospedando-demo/
 ## Diapositivas
 
 1. Apertura personalizada · 2. Antes y después (se arrastra) · 3. Calendario en vivo · 4. Página propia y
-calculadora de comisiones · 5. Recorrido del huésped · 6. Flow en WhatsApp · 7. Planes y precios · 8. Cómo empiezas
-y lo que todavía no hace · 9. Cierre con código QR para crear la cuenta.
+calculadora de comisiones · 5. Así se ve tu web en el computador (navegador con su dirección, buscador y
+reserva) · 6. Recorrido del huésped · 7. Flow en WhatsApp · 8. Planes y precios · 9. Cómo empiezas
+y lo que todavía no hace · 10. Cierre con código QR para crear la cuenta.
 
 Precios y funciones tomados de la presentación oficial y del catálogo de planes (noviembre de 2026). Si cambian los
 precios, se actualiza `PLANES` en `index.html`. Los datos de las pantallas son de ejemplo.

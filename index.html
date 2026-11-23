@@ -245,6 +245,62 @@
   .fuga p{font-size:14px;color:var(--gris);max-width:330px;line-height:1.5}
   .fuga p b{color:var(--noche)}
 
+
+  /* ================= 5 · la web en computador ================= */
+  .web-g{display:grid;grid-template-columns:1fr 300px;gap:36px;margin-top:18px;align-items:start}
+  .ventana.navegador .chrome{height:36px;gap:7px}
+  .ventana.navegador .chrome span{flex:1;max-width:460px;display:flex;align-items:center;gap:7px;font-size:12px;padding:4px 12px;color:var(--gris)}
+  .ventana.navegador .chrome span::before{content:"🔒";font-size:10px}
+  .pestana{position:absolute;left:96px;top:6px;font-size:11px;background:#fff;border-radius:8px 8px 0 0;padding:4px 14px;max-width:260px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--gris)}
+  .ventana.navegador{position:relative;padding-top:0}
+  .ventana.navegador .chrome{margin-top:0}
+  .web{height:min(470px,calc(100vh - 300px));min-height:340px;overflow-y:auto;overflow-x:hidden;scroll-behavior:smooth;position:relative;transition:background .5s,color .5s;font-size:13px}
+  .web::-webkit-scrollbar{width:8px}.web::-webkit-scrollbar-thumb{background:rgba(127,127,127,.35);border-radius:4px}
+  .w-nav{position:sticky;top:0;z-index:4;display:flex;align-items:center;justify-content:space-between;padding:12px 26px;backdrop-filter:blur(10px)}
+  .w-nav .marca-h{font-weight:800;font-size:16px;letter-spacing:-.3px}
+  .w-nav nav{display:flex;gap:18px;align-items:center;font-size:12.5px;font-weight:600}
+  .w-nav nav a{opacity:.8;cursor:pointer;text-decoration:none}
+  .w-btn{border:none;border-radius:10px;padding:8px 14px;font-weight:800;font-size:12.5px;color:#fff;cursor:pointer}
+  .w-hero{position:relative;height:300px;overflow:hidden}
+  .w-hero svg{position:absolute;inset:0;width:100%;height:100%}
+  .w-hero .cap{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:0 46px;color:#fff;background:linear-gradient(90deg,rgba(0,0,0,.38),rgba(0,0,0,0) 70%)}
+  .w-hero h3{font-size:34px;line-height:1.08;letter-spacing:-.8px;max-width:480px;font-weight:800}
+  .w-hero p{margin-top:8px;font-size:14px;opacity:.92}
+  .w-hero .bts{display:flex;gap:10px;margin-top:18px}
+  .w-hero .bts .sec{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.6);backdrop-filter:blur(6px)}
+  .w-busca{position:relative;z-index:2;margin:-38px 46px 0;border-radius:16px;padding:14px 16px;display:grid;grid-template-columns:repeat(4,1fr) auto;gap:12px;align-items:end;box-shadow:0 18px 40px -18px rgba(0,0,0,.35)}
+  .w-busca small{display:block;font-size:10.5px;opacity:.65;font-weight:700;text-transform:uppercase;letter-spacing:.6px}
+  .w-busca b{display:block;font-size:13.5px;margin-top:2px}
+  .w-busca .t{grid-column:1/-1;font-weight:800;font-size:13px;margin-bottom:-4px}
+  .w-sec{padding:34px 46px 4px}
+  .w-sec h4{font-size:21px;letter-spacing:-.4px;margin-bottom:12px;font-weight:800}
+  .w-sec p.txt{max-width:620px;line-height:1.6;opacity:.85}
+  .w-aviso{margin:0 46px;border-radius:12px;padding:11px 14px;font-weight:700;font-size:12.5px;display:none}
+  .w-aviso.on{display:block;animation:entra .4s var(--ease) both}
+  .w-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:16px}
+  .w-card{border:1px solid rgba(127,127,127,.22);border-radius:16px;overflow:hidden;transition:transform .3s var(--ease),box-shadow .3s}
+  .w-card.libre{box-shadow:0 0 0 2px var(--verde)}
+  .w-card .foto{height:110px;position:relative}
+  .w-card .foto svg{position:absolute;inset:0;width:100%;height:100%}
+  .w-card .d{padding:12px 14px}
+  .w-card .d b{font-size:14px;display:block}
+  .w-card .d small{display:block;opacity:.7;margin-top:3px}
+  .w-card .d .pr{margin-top:8px;font-weight:800}
+  .w-card .d button{margin-top:10px;width:100%}
+  .w-serv{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+  .w-serv div{border:1px solid rgba(127,127,127,.2);border-radius:12px;padding:11px 12px;font-weight:600}
+  .w-mapa{display:grid;grid-template-columns:1.3fr 1fr;gap:18px;align-items:center}
+  .w-mapa svg{width:100%;height:170px;border-radius:16px;display:block}
+  .w-pie{margin-top:34px;padding:20px 46px 26px;font-size:11.5px;line-height:1.7;opacity:.85;border-top:1px solid rgba(127,127,127,.22);display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  .w-pie a{text-decoration:underline;cursor:pointer;margin-right:12px}
+  .w-ok{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);z-index:6;width:min(420px,90%);border-radius:14px;padding:12px 15px;font-size:12.5px;line-height:1.45;background:#E5F5EC;color:#1E6B48;border:1px solid #B9E2CB;box-shadow:var(--sombra-s);display:none}
+  .w-ok.on{display:block;animation:pop .6s var(--ease)}
+  .web-lado .lista{list-style:none;margin-top:16px;display:flex;flex-direction:column;gap:9px}
+  .web-lado .lista li{font-size:14px;line-height:1.45;color:var(--gris);padding-left:24px;position:relative}
+  .web-lado .lista li::before{content:"✓";position:absolute;left:0;top:1px;width:17px;height:17px;border-radius:9px;background:#E7F6EC;color:var(--verde);font-size:10.5px;font-weight:800;display:grid;place-items:center}
+  .web-lado .acc{width:100%;margin-top:10px}
+  .web-lado .estilos{margin-bottom:6px}
+
   /* ================= 5 · huésped ================= */
   .linea-t{position:relative;display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:30px}
   .linea-t::before{content:"";position:absolute;left:9%;right:9%;top:23px;height:2px;background:var(--borde)}
@@ -423,6 +479,7 @@
     .hito small{display:none}
     .app{grid-template-columns:1fr}.app aside{display:none}
     .cel,.wa{margin:0 auto}
+    .web-g{grid-template-columns:1fr}.w-nav nav a{display:none}.w-busca{grid-template-columns:1fr 1fr;margin:-30px 16px 0}.w-hero .cap,.w-sec,.w-pie{padding-left:18px;padding-right:18px}.w-aviso{margin:0 18px}.w-hero h3{font-size:26px}.w-mapa{grid-template-columns:1fr}
     .capitulo,.reloj,.solo-pc{display:none}
   }
   @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.e,.flota,.apertura h1 .palabra{opacity:1!important;transform:none!important;filter:none!important}.barras i{transform:none}}
@@ -582,6 +639,30 @@
           <div class="fuga"><div class="big" id="kTotal">$0<small> /mes</small></div><p id="kTexto"></p></div>
           <p class="mini" style="margin-top:10px">La comisión depende de cada plataforma y acuerdo: ajústala a la tuya. Es un cálculo de ejemplo, no una promesa de ventas.</p>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 · LA WEB EN COMPUTADOR -->
+  <section class="dia" data-cap="Tu página web" data-tit="Así se ve tu web" data-nota="<b>1 min.</b> Toca «Recorrer la página» y deja que baje sola mientras hablas: «esta es la web que ve tu huésped desde el computador, con tu nombre y tu dirección». Luego «Buscar fechas» y «Reservar»: entra sola al calendario. Si pregunta, el estilo es el mismo que eligió en el celular y se cambia desde su panel. Fotos y precios son de ejemplo: los suyos los carga él.">
+    <div class="rotulo e e1">Así se ve tu web en el computador</div>
+    <h2 class="e e2">Una web de verdad, <span class="acento">con tu nombre y tu dirección</span></h2>
+    <div class="web-g">
+      <div class="ventana navegador e e3">
+        <div class="chrome"><i style="background:#E8695C"></i><i style="background:#F1BF4E"></i><i style="background:#5CC26F"></i><span id="wUrl">tu-alojamiento.desarrollandoando.com</span></div>
+        <div class="web" id="web"></div>
+      </div>
+      <div class="web-lado e e4">
+        <div class="estilos" id="estilosWeb"><button data-e="clasico" class="on">Clásico</button><button data-e="moderno">Moderno</button><button data-e="natural">Natural</button></div>
+        <button class="acc" id="wRecorrer"><span class="ic" style="background:#EAF0FD">🖱️</span><span><b>Recorrer la página</b><small>Baja sola de arriba a abajo</small></span></button>
+        <button class="acc" id="wBuscar"><span class="ic" style="background:#E7F6EC">📅</span><span><b>Buscar fechas</b><small>Muestra solo lo disponible</small></span></button>
+        <ul class="lista">
+          <li>Tu dirección propia en internet, lista desde el primer día.</li>
+          <li>Inicio, alojamientos, servicios, cómo llegar y Mi reserva.</li>
+          <li>Se ve bien en computador y en celular.</li>
+          <li>Pie con tu NIT, RNT y tus políticas.</li>
+        </ul>
+        <p class="mini" style="margin-top:12px">Fotos, textos y precios de ejemplo.</p>
       </div>
     </div>
   </section>
@@ -993,8 +1074,73 @@
       p.scrollTop = p.scrollHeight;
     }));
     $("#sOk").classList.remove("on");
+    armarWeb();
   }
   $$("#estilos button").forEach((b) => (b.onclick = () => { $$("#estilos button").forEach((x) => x.classList.toggle("on", x === b)); estilo = b.dataset.e; armarSitio(); }));
+  // ---------- 5 · La web en computador ----------
+  const slugDe = (t) => (String(t || "tu alojamiento").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 40) || "tu-alojamiento");
+  const conId = (svg, id) => svg.replace('id="g"', `id="${id}"`).replace("url(#g)", `url(#${id})`);
+  function armarWeb() {
+    const e = ESTILOS[estilo], w = $("#web");
+    if (!w) return;
+    const nombre = esc(datos.aloj || "Tu alojamiento"), ciudad = esc(datos.ciudad || "Colombia");
+    const habs = datos.uni <= 5 ? [["Cabaña con jacuzzi", 380000, 2], ["Cabaña familiar", 450000, 5]] : [["Habitación doble", 240000, 2], ["Suite con balcón", 360000, 3], ["Familiar", 420000, 5]];
+    const oscuro = estilo === "moderno";
+    const caja = oscuro ? "#18202b" : "#ffffff";
+    const suave = oscuro ? "#141b24" : (estilo === "natural" ? "#EDE8DA" : "#F4F7FA");
+    const tonos = [["#9cc9e6", "#f4d7b5"], ["#cfe6c4", "#f6efd8"], ["#f2c6a8", "#fbe7d2"]];
+    const foto = (i) => conId(paisaje(oscuro ? e.fotos[i % 3] : tonos[i % 3][0], oscuro ? "#0f141b" : tonos[i % 3][1], e.btn, "#fff3d6"), "gw" + i);
+    $("#wUrl").textContent = slugDe(datos.aloj) + ".desarrollandoando.com";
+    w.style.background = e.fondo; w.style.color = e.texto;
+    w.innerHTML = `
+      <div class="w-nav" style="background:${oscuro ? "rgba(15,20,27,.86)" : "rgba(255,255,255,.86)"};color:${e.texto}"><div class="marca-h" style="font-family:${e.fuente}">${nombre}</div>
+        <nav><a data-ir="wIni">Inicio</a><a data-ir="wAloj">Alojamientos</a><a data-ir="wServ">Servicios</a><a data-ir="wLlegar">Cómo llegar</a><a>Mi reserva</a><button class="w-btn" style="background:${e.btn}" data-ir="wAloj">Reservar</button></nav></div>
+      <div class="w-hero" id="wIni">${conId(e.paisaje, "gwh")}<div class="cap"><h3 style="font-family:${e.fuente}">${nombre}</h3><p>${ciudad} · Reserva directo con nosotros</p>
+        <div class="bts"><button class="w-btn" style="background:${e.btn}" data-ir="wAloj">Reservar ahora</button><button class="w-btn sec" data-ir="wAloj">Ver alojamientos</button></div></div></div>
+      <div class="w-busca" style="background:${caja};color:${e.texto}"><div class="t">Consulta disponibilidad</div>
+        <div><small>Llegada</small><b>vie, 5 dic</b></div><div><small>Salida</small><b>dom, 7 dic</b></div><div><small>Adultos</small><b>2</b></div><div><small>Niños</small><b>0</b></div>
+        <button class="w-btn" style="background:${e.btn}" id="wBtnBuscar">Buscar</button></div>
+      <div class="w-sec"><h4 style="font-family:${e.fuente}">Sobre el hotel</h4><p class="txt">Un lugar tranquilo en ${ciudad} para descansar. Aquí cuentas tu historia, lo que hace especial a tu alojamiento y lo que van a vivir tus huéspedes.</p></div>
+      <div class="w-sec" id="wAloj"><h4 style="font-family:${e.fuente}">Alojamientos</h4></div>
+      <div class="w-aviso" id="wAviso" style="background:${oscuro ? "#1d2633" : "#E5F5EC"};color:${oscuro ? "#9fe3bf" : "#1E6B48"}"></div>
+      <div class="w-sec" style="padding-top:14px"><div class="w-cards">${habs.map(([n, v, c], i) => `<div class="w-card" style="background:${caja}"><div class="foto">${foto(i)}</div><div class="d"><b>${n}</b><small>Hasta ${c} personas</small><div class="pr">Desde ${peso(v)} por noche</div><button class="w-btn" style="background:${e.btn}" data-h="${n}" data-v="${v}">Reservar</button></div></div>`).join("")}</div></div>
+      <div class="w-sec" id="wServ"><h4 style="font-family:${e.fuente}">Servicios</h4><p class="txt" style="margin-bottom:10px;font-weight:700">Incluido en todas las habitaciones</p>
+        <div class="w-serv">${["📶 Wifi", "🅿️ Parqueadero", "🍳 Desayuno", "🧺 Toallas y lencería"].map((x) => `<div style="background:${suave}">${x}</div>`).join("")}</div></div>
+      <div class="w-sec" id="wLlegar"><h4 style="font-family:${e.fuente}">Cómo llegar</h4><div class="w-mapa">
+        <svg viewBox="0 0 400 170" preserveAspectRatio="xMidYMid slice"><rect width="400" height="170" fill="${suave}"/><path d="M0 120 C90 100 150 140 230 96 S350 60 400 70" stroke="${oscuro ? "#2a3440" : "#d9dfe5"}" stroke-width="16" fill="none"/><path d="M120 0 C130 60 170 110 160 170" stroke="${oscuro ? "#2a3440" : "#d9dfe5"}" stroke-width="10" fill="none"/><circle cx="232" cy="92" r="20" fill="${e.btn}" opacity=".18"/><path d="M232 66c-10 0-17 7-17 16 0 12 17 28 17 28s17-16 17-28c0-9-7-16-17-16z" fill="${e.btn}"/><circle cx="232" cy="82" r="6" fill="#fff"/></svg>
+        <div><p class="txt">${ciudad}, Colombia.<br>Check-in desde las 3:00 p. m.<br>Check-out hasta las 12:00 m.</p><button class="w-btn" style="background:${e.btn};margin-top:12px">Ver en el mapa</button></div></div></div>
+      <div class="w-pie" style="background:${suave}"><div><b>${nombre}</b><br>NIT 900.000.000-0 · RNT 00000 · Tel. 300 000 0000<br><a>Términos</a><a>Cancelación</a><a>Política de tratamiento de datos</a></div>
+        <div style="text-align:right">¿Ya reservaste? <a style="margin:0">Mi reserva</a><br><span style="opacity:.7">Sitio hecho con HospedAndo</span></div></div>
+      <div class="w-ok" id="wOk"></div>`;
+    $$("[data-ir]", w).forEach((b) => (b.onclick = () => { const d = $("#" + b.dataset.ir); if (d) w.scrollTop = d.offsetTop - 50; }));
+    $$(".w-card button", w).forEach((b) => (b.onclick = () => {
+      const c = $("#wOk");
+      c.innerHTML = `✅ <b>¡Reserva recibida!</b> ${b.dataset.h} · 2 noches · ${peso(b.dataset.v * 2)}. Ya está en tu calendario, sin comisión.`;
+      c.classList.remove("on"); void c.offsetWidth; c.classList.add("on");
+      c.style.top = (w.scrollTop + w.clientHeight - 80) + "px"; c.style.bottom = "auto";
+    }));
+    $("#wBtnBuscar").onclick = buscarWeb;
+    $$("#estilosWeb button").forEach((x) => x.classList.toggle("on", x.dataset.e === estilo));
+  }
+  function buscarWeb() {
+    const w = $("#web"), a = $("#wAviso"), n = $$(".w-card", w).length;
+    a.textContent = `${n} ${n === 1 ? "alojamiento disponible" : "alojamientos disponibles"} del 5 al 7 de diciembre · 2 adultos`;
+    a.classList.add("on");
+    $$(".w-card", w).forEach((c) => c.classList.add("libre"));
+    w.scrollTop = $("#wAloj").offsetTop - 50;
+  }
+  let recorriendo = null;
+  $("#wRecorrer").onclick = () => {
+    const w = $("#web");
+    if (recorriendo) { cancelAnimationFrame(recorriendo); recorriendo = null; }
+    w.style.scrollBehavior = "auto"; w.scrollTop = 0;
+    const fin = w.scrollHeight - w.clientHeight, t0 = performance.now(), dura = quieto ? 1 : 9000;
+    const paso = (t) => { const p = Math.min(1, (t - t0) / dura); w.scrollTop = fin * (p < .5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2); if (p < 1) recorriendo = requestAnimationFrame(paso); else { recorriendo = null; w.style.scrollBehavior = ""; } };
+    recorriendo = requestAnimationFrame(paso);
+  };
+  $("#web").addEventListener("wheel", () => { if (recorriendo) { cancelAnimationFrame(recorriendo); recorriendo = null; $("#web").style.scrollBehavior = ""; } }, { passive: true });
+  $("#wBuscar").onclick = buscarWeb;
+  $$("#estilosWeb button").forEach((b) => (b.onclick = () => { estilo = b.dataset.e; $$("#estilos button").forEach((x) => x.classList.toggle("on", x.dataset.e === estilo)); armarSitio(); }));
   const pintarRango = (r) => r.style.setProperty("--p", ((r.value - r.min) / (r.max - r.min)) * 100 + "%");
   let mostrado = 0;
   function animar(el, hasta, fmtF) {
