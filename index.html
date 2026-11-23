@@ -478,7 +478,9 @@
   const peso = (n) => "$" + Math.round(n).toLocaleString("es-CO");
 
   // ---------- Datos del cliente (solo en el enlace) ----------
-  const q = new URLSearchParams(location.search);
+  // Los datos van después del «#» (#1?n=…&a=…): el navegador nunca los manda al servidor.
+  const trozos = location.hash.slice(1).split("?");
+  const q = new URLSearchParams(trozos[1] || location.search);
   const datos = {
     nombre: (q.get("n") || "").slice(0, 40),
     aloj: (q.get("a") || "").slice(0, 60),
@@ -524,7 +526,7 @@
     $("#ant").disabled = i === 0; $("#sig").disabled = i === dias.length - 1;
     $("#progreso").style.width = ((i + 1) / dias.length) * 100 + "%";
     $("#notas").innerHTML = "<div class='chico'>Diapositiva " + (i + 1) + " de " + dias.length + "</div>" + (dias[i].dataset.nota || "");
-    try { history.replaceState(null, "", location.pathname + location.search + "#" + (i + 1)); } catch { /* archivo local */ }
+    try { history.replaceState(null, "", location.pathname + "#" + (i + 1) + consulta()); } catch { /* archivo local */ }
     if (i === dias.length - 1) setTimeout(confeti, 350);
   }
   $("#ant").onclick = () => ir(actual - 1);
@@ -813,7 +815,7 @@
     if (datos.ciudad) p.set("c", datos.ciudad);
     return p.toString() ? "?" + p : "";
   }
-  const enlace = () => location.href.split(/[?#]/)[0] + consulta();
+  const enlace = () => location.href.split(/[?#]/)[0] + "#1" + consulta();
   function abrirAjustes() {
     $("#aNombre").value = datos.nombre; $("#aAloj").value = datos.aloj;
     $("#aUni").value = datos.uni; $("#aCiudad").value = datos.ciudad;
@@ -829,7 +831,7 @@
   }
   function cerrarAjustes() {
     leerAjustes();
-    try { history.replaceState(null, "", location.pathname + consulta() + "#" + (actual + 1)); } catch { /* archivo local */ }
+    try { history.replaceState(null, "", location.pathname + "#" + (actual + 1) + consulta()); } catch { /* archivo local */ }
     $("#velo").classList.remove("on"); pintarDatos();
   }
   $$("#velo input").forEach((i) => i.addEventListener("input", leerAjustes));
@@ -865,7 +867,7 @@
 
   // ---------- Inicio ----------
   pintarDatos(); comision(); pintarRuta();
-  const h = parseInt(location.hash.slice(1), 10);
+  const h = parseInt(trozos[0], 10);
   ir(h >= 1 && h <= dias.length ? h - 1 : 0);
 })();
 </script>
