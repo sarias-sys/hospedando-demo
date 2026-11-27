@@ -306,7 +306,7 @@
 
 
   /* ================= 5 · la web en computador ================= */
-  .web-g{display:grid;grid-template-columns:1fr 300px;gap:36px;margin-top:18px;align-items:start}
+  .web-g{display:grid;grid-template-columns:1fr 320px;gap:36px;margin-top:18px;align-items:start}
   .ventana.navegador .chrome{height:36px;gap:7px}
   .ventana.navegador .chrome span{flex:1;max-width:460px;display:flex;align-items:center;gap:7px;font-size:12px;padding:4px 12px;color:var(--gris)}
   .ventana.navegador .chrome span::before{content:"🔒";font-size:10px}
@@ -358,7 +358,32 @@
   .web-lado .lista li{font-size:14px;line-height:1.45;color:var(--gris);padding-left:24px;position:relative}
   .web-lado .lista li::before{content:"✓";position:absolute;left:0;top:1px;width:17px;height:17px;border-radius:9px;background:#E7F6EC;color:var(--verde);font-size:10.5px;font-weight:800;display:grid;place-items:center}
   .web-lado .acc{width:100%;margin-top:10px}
-  .web-lado .estilos{margin-bottom:6px}
+  .web-lado .estilos{margin-bottom:8px}
+  .seg.compacto button{padding:7px 6px;font-size:12.5px}
+  .acc-fila{display:flex;gap:8px;margin-top:8px}
+  .web-lado .acc-fila .acc{margin-top:0;flex:1;justify-content:center;padding:9px 8px}
+  .acc-fila .acc b{font-size:13px}
+  .acc-fila .acc:hover{transform:translateY(-2px)}
+  .web-lado .roi{padding:12px 14px;margin-top:10px}
+  .web-lado .roi .deslizador{margin-top:9px}
+  .web-lado .roi .deslizador .t{font-size:12.5px;margin-bottom:4px}
+  .web-lado .fuga{margin-top:10px;padding-top:10px;flex-direction:column;align-items:flex-start;gap:6px}
+  .web-lado .fuga .big{font-size:clamp(28px,2.6vw,36px)}
+  .web-lado .fuga p{font-size:13px;line-height:1.45}
+  #roi:not(.otas) .solo-otas,#roi.otas .solo-vacias{display:none}
+  #roi:not(.otas) .fuga .big{color:var(--verde)}
+  /* La misma web, vista como en un celular */
+  .ventana.navegador{transition:max-width .5s var(--ease)}
+  .ventana.navegador.movil{max-width:340px;margin:0 auto;width:100%}
+  .ventana.navegador.movil .w-nav nav a{display:none}
+  .ventana.navegador.movil .w-nav{padding:12px 16px}
+  .ventana.navegador.movil .w-busca{grid-template-columns:1fr 1fr;margin:-30px 14px 0}
+  .ventana.navegador.movil .w-hero{height:240px}
+  .ventana.navegador.movil .w-hero .cap,.ventana.navegador.movil .w-sec,.ventana.navegador.movil .w-pie{padding-left:16px;padding-right:16px}
+  .ventana.navegador.movil .w-aviso{margin:0 16px}
+  .ventana.navegador.movil .w-hero h3{font-size:24px}
+  .ventana.navegador.movil .w-hero .bts{flex-direction:column;align-items:flex-start}
+  .ventana.navegador.movil .w-mapa{grid-template-columns:1fr}
 
   /* ================= 5 · huésped ================= */
   .linea-t{position:relative;display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:30px}
@@ -561,15 +586,15 @@
 <main class="escena" id="escena">
 
   <!-- 1 · APERTURA -->
-  <section class="dia oscuro apertura" data-cap="Bienvenida" data-tit="Apertura" data-nota="<b>30 s.</b> Saluda por su nombre: «Hoy te muestro en menos de 10 minutos cómo se vería <i>tu alojamiento</i> funcionando con HospedAndo». No leas los 4 datos: deja que los vea mientras hablas.">
+  <section class="dia oscuro apertura" data-cap="Bienvenida" data-tit="Apertura" data-nota="<b>30 s.</b> Saluda por su nombre y pregunta de una vez: <b>«¿cuántas noches se te quedan vacías en un mes normal?»</b>. Anota el número: lo usas en «Tu web» y en los precios. Luego: «hoy te muestro en menos de 10 minutos cómo te llegan más reservas y cómo queda todo en orden». No leas los 4 datos: deja que los vea mientras hablas.">
     <div class="rejilla">
       <div>
         <div class="rotulo e e1">Hola, <span data-v="nombre">bienvenido</span></div>
         <h1 id="titular"></h1>
-        <p class="lead e e3">Reservas, recepción, cobros y tu propia página web en una sola herramienta. Desde el celular o el computador, sin instalar nada. Hecha en Colombia para hoteles, hostales, glampings y fincas.</p>
+        <p class="lead e e3">Te encuentran en Google, te escriben por WhatsApp y reservan en tu propia página. Y las reservas, la recepción y los cobros quedan en una sola herramienta, desde el celular o el computador. Hecha en Colombia para hoteles, hostales, glampings y fincas.</p>
         <div class="kpis e e4">
           <div class="kpi"><b data-cuenta="0" data-suf=" %">0 %</b><span>de comisión por reserva</span></div>
-          <div class="kpi"><b data-cuenta="1" data-suf=" min">1 min</b><span>para crear tu cuenta</span></div>
+          <div class="kpi"><b data-cuenta="24" data-suf=" h">24 h</b><span>Flow responde tu WhatsApp, también de noche</span></div>
           <div class="kpi"><b data-cuenta="25" data-suf=" min">25 min</b><span>para configurarlo con ayuda de la IA</span></div>
           <div class="kpi"><b data-cuenta="15" data-suf=" días">15 días</b><span>de prueba gratis, sin tarjeta</span></div>
         </div>
@@ -639,12 +664,12 @@
       <div class="manija" id="manija"><b>⇆</b></div>
     </div>
     <div class="dolores e e4" id="dolores">
+      <button data-r="Es lo que más nos preguntan. En la siguiente te muestro <b>cómo te encuentran, te escriben y reservan</b> más huéspedes: tu página, Google, Booking y Airbnb, y Flow.">Tengo pocas reservas</button>
       <button data-r="Un <b>solo calendario</b> con todas tus reservas y de dónde vino cada una. No deja guardar dos reservas en la misma habitación y fecha.">Todo está en cuaderno, Excel y WhatsApp</button>
       <button data-r="Con el <b>channel manager</b>, las reservas de Booking y Airbnb llegan al mismo calendario, sin cruces.">Me da miedo una reserva doble</button>
       <button data-r="Tu <b>propia página</b> con motor de reservas: lo que vendes ahí es 100 % tuyo, <b>cero comisión</b>.">Pago mucha comisión</button>
       <button data-r="Los datos del huésped se toman <b>una sola vez</b> en el check-in; los reportes TRA y SIRE te muestran lo pendiente y te avisamos antes de que venza el RNT.">El TRA y el SIRE me quitan horas</button>
       <button data-r="Con el plan Conversa, <b>Flow</b> responde a cualquier hora, mira qué está libre y cotiza con tus tarifas.">No doy abasto con el WhatsApp</button>
-      <button data-r="Es lo que más nos preguntan. En la siguiente te muestro <b>cómo te encuentran, te escriben y reservan</b> más huéspedes: tu página, Google, Booking y Airbnb, y Flow.">Tengo pocas reservas</button>
     </div>
     <div class="respuesta" id="respuesta"></div>
   </section>
@@ -670,85 +695,7 @@
     </div>
   </section>
 
-  <!-- 3 · CALENDARIO -->
-  <section class="dia" data-cap="Reservas" data-tit="Calendario" data-nota="<b>1 min 30 s.</b> Señala los colores por origen. Toca «Llega una reserva de tu página» y luego «Intentar una reserva cruzada»: ese <b>«no se puede»</b> es lo que más tranquiliza. Remata: «nunca más dos huéspedes para la misma cama».">
-    <div class="rotulo e e1">Reservas y calendario</div>
-    <h2 class="e e2">Todo <span class="acento" data-v="aloj">tu alojamiento</span> en un solo calendario</h2>
-    <div class="dos">
-      <div class="ventana e e3">
-        <div class="chrome"><i style="background:#E8695C"></i><i style="background:#F1BF4E"></i><i style="background:#5CC26F"></i><span>hoteles.desarrollandoando.com</span></div>
-        <div class="app" style="height:min(430px,calc(100vh - 330px));min-height:330px">
-          <aside><div class="h"><i></i>HospedAndo</div><a>Inicio</a><a class="on">Calendario</a><a>Reservas</a><a>Recepción</a><a>Limpieza</a><a>Reportes</a><a>Mi página</a><div class="hotel"><span data-v="aloj">Tu alojamiento</span>▾</div></aside>
-          <main>
-            <div class="top"><b>Calendario · diciembre</b><span class="busca">Buscar huésped o reserva</span></div>
-            <div class="cal"><table id="tablaCal"></table></div>
-            <div class="leyenda"><span><i style="background:var(--pagina)"></i>Tu página</span><span><i style="background:var(--booking)"></i>Booking</span><span><i style="background:var(--airbnb)"></i>Airbnb</span><span><i style="background:var(--wa)"></i>WhatsApp / teléfono</span></div>
-          </main>
-        </div>
-      </div>
-      <div class="acciones e e4">
-        <button class="acc" id="cNueva"><span class="ic" style="background:#E7F6EC">🌐</span><span><b>Llega una reserva de tu página</b><small>Entra sola al calendario, sin comisión</small></span></button>
-        <button class="acc" id="cChoque"><span class="ic" style="background:#FBE9E5">⚠️</span><span><b>Intentar una reserva cruzada</b><small>Misma habitación, mismas noches</small></span></button>
-        <button class="acc" id="cMover"><span class="ic" style="background:#EAF0FD">↔️</span><span><b>Cambiar de habitación</b><small>En el sistema se arrastra; aquí, con un toque</small></span></button>
-        <div class="aviso" id="cAviso"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 4 · PÁGINA PROPIA -->
-  <section class="dia" data-cap="Tu página web" data-tit="Página sin comisión" data-nota="<b>1 min 30 s.</b> Cambia los 3 estilos en vivo y reserva una habitación en el celular. Luego pregúntale cuántas reservas por plataformas tiene al mes, su valor promedio y qué comisión paga, y mueve los deslizadores: la cifra en rojo siempre sorprende.">
-    <div class="rotulo e e1">Tu página web con motor de reservas</div>
-    <h2 class="e e2">Tus huéspedes reservan directo. <span class="acento">Sin comisión.</span></h2>
-    <div class="tres">
-      <div class="e e3" style="text-align:center">
-        <div class="estilos" id="estilos"><button data-e="clasico" class="on">Clásico</button><button data-e="moderno">Moderno</button><button data-e="natural">Natural</button></div>
-        <div class="cel"><div class="pantalla" id="pantalla">
-          <div class="s-top"><div class="s-nombre" data-v="aloj">Tu alojamiento</div><div class="s-ciudad"><span data-v="ciudad">Colombia</span> · Reserva directa</div></div>
-          <div class="s-hero" id="hero"></div>
-          <div class="s-busca"><div>Llegada<b>vie 5 dic</b></div><div>Salida<b>dom 7 dic</b></div><div>Huéspedes<b>2</b></div></div>
-          <div class="s-habs" id="habs"></div>
-          <div class="s-ok" id="sOk"></div>
-        </div></div>
-      </div>
-      <div>
-        <p class="lead e e3" style="margin-top:0;font-size:clamp(15px,1.25vw,18px)">Tres estilos con tu logo, colores y fotos. El huésped ve solo lo disponible, con tus precios de temporada, y paga por transferencia, Nequi o en el alojamiento. Si no paga a tiempo, la habitación se libera sola.</p>
-        <div class="tarjeta roi e e4">
-          <div class="rotulo" style="margin-bottom:0">¿Cuánto se te va hoy en comisiones?</div>
-          <div class="deslizador"><div class="t">Reservas por plataformas al mes <span id="vRes">10</span></div><input type="range" id="kRes" min="0" max="60" value="10"></div>
-          <div class="deslizador"><div class="t">Valor promedio por reserva <span id="vVal">$350.000</span></div><input type="range" id="kVal" min="100000" max="2000000" step="10000" value="350000"></div>
-          <div class="deslizador"><div class="t">Comisión que pagas hoy <span id="vCom">15 %</span></div><input type="range" id="kCom" min="0" max="30" value="15"></div>
-          <div class="fuga"><div class="big" id="kTotal">$0<small> /mes</small></div><p id="kTexto"></p></div>
-          <p class="mini" style="margin-top:10px">La comisión depende de cada plataforma y acuerdo: ajústala a la tuya. Es un cálculo de ejemplo, no una promesa de ventas.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 5 · LA WEB EN COMPUTADOR -->
-  <section class="dia" data-cap="Tu página web" data-tit="Así se ve tu web" data-nota="<b>1 min.</b> Toca «Recorrer la página» y deja que baje sola mientras hablas: «esta es la web que ve tu huésped desde el computador, con tu nombre y tu dirección». Luego «Buscar fechas» y «Reservar»: entra sola al calendario. Si pregunta, el estilo es el mismo que eligió en el celular y se cambia desde su panel. Fotos y precios son de ejemplo: los suyos los carga él.">
-    <div class="rotulo e e1">Así se ve tu web en el computador</div>
-    <h2 class="e e2">Una web de verdad, <span class="acento">con tu nombre y tu dirección</span></h2>
-    <div class="web-g">
-      <div class="ventana navegador e e3">
-        <div class="chrome"><i style="background:#E8695C"></i><i style="background:#F1BF4E"></i><i style="background:#5CC26F"></i><span id="wUrl">tu-alojamiento.desarrollandoando.com</span></div>
-        <div class="web" id="web"></div>
-      </div>
-      <div class="web-lado e e4">
-        <div class="estilos" id="estilosWeb"><button data-e="clasico" class="on">Clásico</button><button data-e="moderno">Moderno</button><button data-e="natural">Natural</button></div>
-        <button class="acc" id="wRecorrer"><span class="ic" style="background:#EAF0FD">🖱️</span><span><b>Recorrer la página</b><small>Baja sola de arriba a abajo</small></span></button>
-        <button class="acc" id="wBuscar"><span class="ic" style="background:#E7F6EC">📅</span><span><b>Buscar fechas</b><small>Muestra solo lo disponible</small></span></button>
-        <ul class="lista">
-          <li>Tu dirección propia en internet, lista desde el primer día.</li>
-          <li>Inicio, alojamientos, servicios, cómo llegar y Mi reserva.</li>
-          <li>Se ve bien en computador y en celular.</li>
-          <li>Pie con tu NIT, RNT y tus políticas.</li>
-        </ul>
-        <p class="mini" style="margin-top:12px">Fotos, textos y precios de ejemplo.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- 7 · GOOGLE -->
+  <!-- 4 · GOOGLE -->
   <section class="dia" data-cap="Te encuentran en Google" data-tit="Posicionamiento en Google" data-nota="<b>1 min 30 s.</b> Pregunta: «¿qué escribe en Google alguien que busca dónde dormir en su zona?». Toca los pasos en orden: cada uno se ilumina en el resultado de ejemplo. Remata con la web real de León Dormido (ábrela si hay tiempo). Sé honesto: Google tarda semanas en mover a alguien y <b>nadie puede garantizar el primer lugar</b>; lo que sí garantizamos es que la web sale bien hecha para Google.">
     <div class="rotulo e e1">Posicionamiento en Google · SEO</div>
     <h2 class="e e2">Que te encuentren <span class="acento">en Google</span></h2>
@@ -783,12 +730,35 @@
     </div>
   </section>
 
-  <!-- 5 · HUÉSPED -->
-  <section class="dia" data-cap="Recepción" data-tit="Recorrido del huésped" data-nota="<b>1 min.</b> Recorre los 5 pasos con «Siguiente». En el 2 resalta: «firma desde su celular». En el 5: «nunca te pedimos la clave del SIRE».">
-    <div class="rotulo e e1">Recepción y check-in en línea</div>
-    <h2 class="e e2">Del enlace de bienvenida <span class="acento">al reporte del SIRE</span></h2>
-    <div class="linea-t e e3" id="linea"><div class="avance" id="avance"></div></div>
-    <div class="escenario" id="escenario"></div>
+  <!-- 5 · TU WEB -->
+  <section class="dia" data-cap="Tu página web" data-tit="Tu web sin comisión" data-nota="<b>1 min 30 s.</b> Cambia un estilo y pasa a «Celular»: «así reserva tu huésped desde Instagram». Toca «Buscar fechas» y «Reservar»: entra sola al calendario, sin comisión. Luego la calculadora: si tiene pocas reservas, usa <b>«Noches vacías»</b> con sus números («¿cuántas noches se te quedan vacías en un mes normal?»); si ya vende por Booking o Airbnb, usa <b>«Comisiones»</b>. Fotos y precios son de ejemplo: los suyos los carga él.">
+    <div class="rotulo e e1">Tu página web con motor de reservas</div>
+    <h2 class="e e2">Tus huéspedes reservan directo. <span class="acento">Sin comisión.</span></h2>
+    <div class="web-g">
+      <div class="ventana navegador e e3" id="ventanaWeb">
+        <div class="chrome"><i style="background:#E8695C"></i><i style="background:#F1BF4E"></i><i style="background:#5CC26F"></i><span id="wUrl">tu-alojamiento.desarrollandoando.com</span></div>
+        <div class="web" id="web"></div>
+      </div>
+      <div class="web-lado e e4">
+        <div class="estilos" id="estilosWeb"><button data-e="clasico" class="on">Clásico</button><button data-e="moderno">Moderno</button><button data-e="natural">Natural</button></div>
+        <div class="seg compacto" id="wVista"><button data-v="pc" class="on">💻 Computador</button><button data-v="cel">📱 Celular</button></div>
+        <div class="acc-fila"><button class="acc" id="wRecorrer"><b>▶ Recorrer</b></button><button class="acc" id="wBuscar"><b>📅 Buscar fechas</b></button></div>
+        <div class="tarjeta roi" id="roi">
+          <div class="seg compacto" id="kModo"><button data-k="vacias" class="on">Noches vacías</button><button data-k="otas">Comisiones</button></div>
+          <div class="solo-vacias">
+            <div class="deslizador"><div class="t">Noches vacías al mes <span id="vVac">20</span></div><input type="range" id="kVac" min="0" max="300" step="5" value="20"></div>
+            <div class="deslizador"><div class="t">Precio por noche <span id="vNoc">$250.000</span></div><input type="range" id="kNoc" min="50000" max="1500000" step="10000" value="250000"></div>
+          </div>
+          <div class="solo-otas">
+            <div class="deslizador"><div class="t">Reservas por plataformas al mes <span id="vRes">10</span></div><input type="range" id="kRes" min="0" max="60" value="10"></div>
+            <div class="deslizador"><div class="t">Valor promedio por reserva <span id="vVal">$350.000</span></div><input type="range" id="kVal" min="100000" max="2000000" step="10000" value="350000"></div>
+            <div class="deslizador"><div class="t">Comisión que pagas hoy <span id="vCom">15 %</span></div><input type="range" id="kCom" min="0" max="30" value="15"></div>
+          </div>
+          <div class="fuga"><div class="big" id="kTotal">$0<small> /mes</small></div><p id="kTexto"></p></div>
+        </div>
+        <p class="mini" style="margin-top:6px">Web de ejemplo. El cálculo usa tus números: no es una promesa de ventas.</p>
+      </div>
+    </div>
   </section>
 
   <!-- 6 · FLOW -->
@@ -813,8 +783,41 @@
     </div>
   </section>
 
-  <!-- 7 · PRECIOS -->
-  <section class="dia" data-cap="Precios" data-tit="Planes y precios" data-nota="<b>1 min 30 s.</b> Su plan ya viene resaltado si lo personalizaste. Muestra mensual y luego «Anual: pagas 10, usas 12». Remata con el medidor: «con N reservas directas al mes, el plan se paga solo». Si es de Caldas, aparece la oferta de 6 meses.">
+  <!-- 7 · CALENDARIO -->
+  <section class="dia" data-cap="Reservas" data-tit="Calendario" data-nota="<b>1 min 30 s.</b> Señala los colores por origen. Toca «Llega una reserva de tu página» y luego «Intentar una reserva cruzada»: ese <b>«no se puede»</b> es lo que más tranquiliza. Remata: «nunca más dos huéspedes para la misma cama».">
+    <div class="rotulo e e1">Reservas y calendario</div>
+    <h2 class="e e2">Todo <span class="acento" data-v="aloj">tu alojamiento</span> en un solo calendario</h2>
+    <div class="dos">
+      <div class="ventana e e3">
+        <div class="chrome"><i style="background:#E8695C"></i><i style="background:#F1BF4E"></i><i style="background:#5CC26F"></i><span>hoteles.desarrollandoando.com</span></div>
+        <div class="app" style="height:min(430px,calc(100vh - 330px));min-height:330px">
+          <aside><div class="h"><i></i>HospedAndo</div><a>Inicio</a><a class="on">Calendario</a><a>Reservas</a><a>Recepción</a><a>Limpieza</a><a>Reportes</a><a>Mi página</a><div class="hotel"><span data-v="aloj">Tu alojamiento</span>▾</div></aside>
+          <main>
+            <div class="top"><b>Calendario · diciembre</b><span class="busca">Buscar huésped o reserva</span></div>
+            <div class="cal"><table id="tablaCal"></table></div>
+            <div class="leyenda"><span><i style="background:var(--pagina)"></i>Tu página</span><span><i style="background:var(--booking)"></i>Booking</span><span><i style="background:var(--airbnb)"></i>Airbnb</span><span><i style="background:var(--wa)"></i>WhatsApp / teléfono</span></div>
+          </main>
+        </div>
+      </div>
+      <div class="acciones e e4">
+        <button class="acc" id="cNueva"><span class="ic" style="background:#E7F6EC">🌐</span><span><b>Llega una reserva de tu página</b><small>Entra sola al calendario, sin comisión</small></span></button>
+        <button class="acc" id="cChoque"><span class="ic" style="background:#FBE9E5">⚠️</span><span><b>Intentar una reserva cruzada</b><small>Misma habitación, mismas noches</small></span></button>
+        <button class="acc" id="cMover"><span class="ic" style="background:#EAF0FD">↔️</span><span><b>Cambiar de habitación</b><small>En el sistema se arrastra; aquí, con un toque</small></span></button>
+        <div class="aviso" id="cAviso"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8 · HUÉSPED -->
+  <section class="dia" data-cap="Recepción" data-tit="Recorrido del huésped" data-nota="<b>1 min.</b> Recorre los 5 pasos con «Siguiente». En el 2 resalta: «firma desde su celular». En el 5: «nunca te pedimos la clave del SIRE».">
+    <div class="rotulo e e1">Recepción y check-in en línea</div>
+    <h2 class="e e2">Del enlace de bienvenida <span class="acento">al reporte del SIRE</span></h2>
+    <div class="linea-t e e3" id="linea"><div class="avance" id="avance"></div></div>
+    <div class="escenario" id="escenario"></div>
+  </section>
+
+  <!-- 9 · PRECIOS -->
+  <section class="dia" data-cap="Precios" data-tit="Planes y precios" data-nota="<b>1 min 30 s.</b> Su plan ya viene resaltado si lo personalizaste. Muestra mensual y luego «Anual: pagas 10, usas 12». Remata con el medidor: sale con lo que pusiste en la calculadora de «Tu web» («con N noches más al mes» o «con N reservas directas al mes, el plan se paga solo»). Si es de Caldas, aparece la oferta de 6 meses.">
     <div class="rotulo e e1">Planes y precios</div>
     <h2 class="e e2">Pagas según tu tamaño, <span class="acento">no según lo que vendes</span></h2>
     <div class="planes e e3" id="planes"></div>
@@ -833,7 +836,7 @@
     </div>
   </section>
 
-  <!-- 8 · EMPEZAR -->
+  <!-- 10 · EMPEZAR -->
   <section class="dia" data-cap="Cómo empiezas" data-tit="Cómo empiezas" data-nota="<b>45 s.</b> Los 4 pasos, rápido. Luego la tarjeta de «lo que todavía no hace»: decirlo de frente genera confianza. Cierra con: «¿te parece si la creamos ahora y cargamos tus habitaciones juntos?»">
     <div class="rotulo e e1">Cómo empiezas</div>
     <h2 class="e e2">De cero a recibir reservas, <span class="acento">en una tarde</span></h2>
@@ -855,13 +858,13 @@
     </div>
   </section>
 
-  <!-- 9 · CIERRE -->
-  <section class="dia oscuro cierre" data-cap="Empieza hoy" data-tit="Cierre" data-nota="<b>Cierre.</b> No preguntes «¿qué te pareció?». Pregunta: <b>«¿la creamos ahora?»</b>. Que escanee el QR con su celular o toque el botón, y en esta misma llamada carguen las primeras habitaciones.">
+  <!-- 11 · CIERRE -->
+  <section class="dia oscuro cierre" data-cap="Empieza hoy" data-tit="Cierre" data-nota="<b>Cierre.</b> No preguntes «¿qué te pareció?». Pregunta: <b>«¿la creamos ahora?»</b>. Que escanee el QR con su celular o toque el botón. En esta misma llamada: cargan las habitaciones, publican la página y, antes de colgar, pone el enlace en su Instagram y en su perfil de Google. Sin ese paso no le llega nadie.">
     <div class="rejilla">
       <div>
         <div class="rotulo e e1">Empieza hoy</div>
         <h1 class="e e2">¿Creamos la cuenta de <span class="acento" data-v="aloj">tu alojamiento</span> ahora mismo?</h1>
-        <p class="lead e e3">Toma un minuto y no pide tarjeta. En esta misma llamada cargamos juntos tus primeras habitaciones y tarifas.</p>
+        <p class="lead e e3">Toma un minuto y no pide tarjeta. En esta misma llamada cargamos tus habitaciones y tarifas, publicamos tu página y pones el enlace en tu Instagram y en tu perfil de Google. Así empiezan a llegar las reservas.</p>
         <div class="botones e e4">
           <a class="boton" id="ctaCrear" href="https://hoteles.desarrollandoando.com/crear-cuenta" target="_blank" rel="noopener">Crear mi cuenta gratis →</a>
           <a class="boton sec" id="ctaAgendar" href="https://hoteles.desarrollandoando.com/agendar" target="_blank" rel="noopener">Agendar otra videollamada</a>
@@ -955,7 +958,7 @@
   // ---------- Titular palabra por palabra ----------
   function titular() {
     const aloj = esc(datos.aloj || "tu alojamiento");
-    const partes = [["Así", "se", "vería"], [`<span class="aloj">${aloj}</span>`], ["en", "orden,", "en"], ["una", "sola", "herramienta."]];
+    const partes = [["Más", "reservas", "para"], [`<span class="aloj">${aloj}</span>`], ["y", "todo", "en", "orden"], ["en", "una", "sola", "herramienta."]];
     let k = 0;
     $("#titular").innerHTML = partes.map((grupo, gi) => grupo.map((w) => `<span class="palabra" style="animation-delay:${0.15 + 0.07 * k++}s">${w}</span>`).join(" ") + (gi === 1 || gi === 2 ? (gi === 1 ? "<br>" : " ") : " ")).join("");
   }
@@ -971,7 +974,7 @@
     const utm = "utm_source=demo&utm_medium=presentacion";
     $("#ctaCrear").href = "https://hoteles.desarrollandoando.com/crear-cuenta?" + utm;
     $("#ctaAgendar").href = "https://hoteles.desarrollandoando.com/agendar?" + utm;
-    armarCalendario(); armarClientes(); armarSeo(); armarSitio(); precio();
+    armarCalendario(); armarClientes(); armarSeo(); armarSitio(); comision();
   }
 
   // ---------- Navegación y sincronía con el presentador ----------
@@ -1256,24 +1259,13 @@
     natural: { fondo: "#F4F1E8", texto: "#2F4A2E", btn: "#2E6B3E", fuente: "Georgia,serif", paisaje: paisaje("#cfe6c4", "#f6efd8", "#2E6B3E", "#fff8dc"), fotos: ["#dfe9d3", "#efe3c8", "#d4e3d9"] },
   };
   let estilo = "clasico";
-  function armarSitio() {
-    const e = ESTILOS[estilo], p = $("#pantalla");
-    p.style.background = e.fondo; p.style.color = e.texto;
-    $(".s-nombre").style.fontFamily = e.fuente;
-    $("#hero").innerHTML = e.paisaje + "<span>Vive una escapada inolvidable</span>";
-    const habs = datos.uni <= 5 ? [["Cabaña con jacuzzi", 380000], ["Cabaña familiar", 450000]] : [["Habitación doble", 240000], ["Suite con balcón", 360000], ["Familiar", 420000]];
-    $("#habs").innerHTML = habs.map(([n, v], i) => `<div class="s-hab"><div class="foto" style="background:linear-gradient(135deg,${e.fotos[i % 3]},${e.fondo})"></div><div class="d"><div><b>${n}</b><br>${peso(v)} / noche</div><button style="background:${e.btn}" data-h="${n}" data-v="${v}">Reservar</button></div></div>`).join("");
-    $$("#habs button").forEach((b) => (b.onclick = () => {
-      const c = $("#sOk");
-      c.style.background = estilo === "moderno" ? "#1d2633" : "#E5F5EC";
-      c.innerHTML = `✅ <b>¡Reserva recibida!</b><br>${b.dataset.h} · 2 noches · ${peso(b.dataset.v * 2)}<br>Paga por transferencia o Nequi. Te apartamos la habitación hasta el plazo de pago.`;
-      c.classList.remove("on"); void c.offsetWidth; c.classList.add("on");
-      p.scrollTop = p.scrollHeight;
-    }));
-    $("#sOk").classList.remove("on");
-    armarWeb();
-  }
-  $$("#estilos button").forEach((b) => (b.onclick = () => { $$("#estilos button").forEach((x) => x.classList.toggle("on", x === b)); estilo = b.dataset.e; armarSitio(); }));
+  // La versión de celular es la misma web, más angosta (antes era una diapositiva aparte).
+  function armarSitio() { armarWeb(); }
+  $$("#wVista button").forEach((b) => (b.onclick = () => {
+    $$("#wVista button").forEach((x) => x.classList.toggle("on", x === b));
+    $("#ventanaWeb").classList.toggle("movil", b.dataset.v === "cel");
+    $("#web").scrollTop = 0;
+  }));
   // ---------- 5 · La web en computador ----------
   const slugDe = (t) => (String(t || "tu alojamiento").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 40) || "tu-alojamiento");
   const conId = (svg, id) => svg.replace('id="g"', `id="${id}"`).replace("url(#g)", `url(#${id})`);
@@ -1337,7 +1329,7 @@
   };
   $("#web").addEventListener("wheel", () => { if (recorriendo) { cancelAnimationFrame(recorriendo); recorriendo = null; $("#web").style.scrollBehavior = ""; } }, { passive: true });
   $("#wBuscar").onclick = buscarWeb;
-  $$("#estilosWeb button").forEach((b) => (b.onclick = () => { estilo = b.dataset.e; $$("#estilos button").forEach((x) => x.classList.toggle("on", x.dataset.e === estilo)); armarSitio(); }));
+  $$("#estilosWeb button").forEach((b) => (b.onclick = () => { estilo = b.dataset.e; armarSitio(); }));
   const pintarRango = (r) => r.style.setProperty("--p", ((r.value - r.min) / (r.max - r.min)) * 100 + "%");
   let mostrado = 0;
   function animar(el, hasta, fmtF) {
@@ -1346,16 +1338,34 @@
     const paso = (t) => { const p = Math.min(1, (t - t0) / 500); const v = desde + (hasta - desde) * (1 - Math.pow(1 - p, 3)); el.firstChild.nodeValue = fmtF(v); if (p < 1) requestAnimationFrame(paso); else mostrado = hasta; };
     requestAnimationFrame(paso);
   }
+  // Dos calculadoras en la misma tarjeta: «Tengo noches vacías» (pocas reservas) y «Vendo por plataformas» (comisiones).
+  let kModo = "vacias";
+  // Lo que cuesta al mes el plan Panel de su tamaño, sin descuentos (lo más simple de explicar).
+  const planDelTamano = () => PLANES.find((p) => datos.uni >= p.min && datos.uni <= p.max) || PLANES[PLANES.length - 1];
   function comision() {
     const r = +$("#kRes").value, v = +$("#kVal").value, c = +$("#kCom").value;
+    const vac = +$("#kVac").value, noc = +$("#kNoc").value;
     $("#vRes").textContent = r; $("#vVal").textContent = peso(v); $("#vCom").textContent = c + " %";
-    ["kRes", "kVal", "kCom"].forEach((id) => pintarRango($("#" + id)));
-    const mes = r * v * c / 100;
-    animar($("#kTotal"), mes, peso);
-    $("#kTexto").innerHTML = mes > 0 ? `Es lo que hoy se va en comisiones. <b>Al año son ${peso(mes * 12)}.</b> Cada reserva que pasa a tu página es plata que se queda contigo.` : "Mueve los deslizadores con tus números.";
+    $("#vVac").textContent = vac; $("#vNoc").textContent = peso(noc);
+    ["kRes", "kVal", "kCom", "kVac", "kNoc"].forEach((id) => pintarRango($("#" + id)));
+    $("#roi").classList.toggle("otas", kModo === "otas");
+    if (kModo === "otas") {
+      const mes = r * v * c / 100;
+      animar($("#kTotal"), mes, peso);
+      $("#kTotal").lastChild.textContent = " /mes";
+      $("#kTexto").innerHTML = mes > 0 ? `Es lo que hoy se va en comisiones. <b>Al año son ${peso(mes * 12)}.</b> Cada reserva que pasa a tu página es plata que se queda contigo.` : "Mueve los deslizadores con tus números.";
+    } else {
+      const plan = planDelTamano(), n = Math.max(1, Math.ceil(plan.panel / noc));
+      animar($("#kTotal"), vac * noc, peso);
+      $("#kTotal").lastChild.textContent = " /mes";
+      $("#kTexto").innerHTML = vac > 0
+        ? `Es lo que valen tus noches vacías. Con llenar <b>${n} ${n === 1 ? "noche más" : "noches más"} al mes</b> el plan ${plan.n} (${peso(plan.panel)}) se paga solo${n <= vac ? `: ${n === 1 ? "es" : "son"} ${n} de tus ${vac} noches vacías` : ""}.`
+        : "Mueve los deslizadores con tus números.";
+    }
     precio();
   }
-  ["kRes", "kVal", "kCom"].forEach((id) => $("#" + id).addEventListener("input", comision));
+  ["kRes", "kVal", "kCom", "kVac", "kNoc"].forEach((id) => $("#" + id).addEventListener("input", comision));
+  $$("#kModo button").forEach((b) => (b.onclick = () => { kModo = b.dataset.k; $$("#kModo button").forEach((x) => x.classList.toggle("on", x === b)); mostrado = 0; comision(); }));
 
   // ---------- 5 · Recorrido del huésped ----------
   const PASOS = [
@@ -1463,8 +1473,14 @@
     if (caldas && modo === "panel") h += `<div class="regalo">🎁 En Caldas: los primeros 6 meses del plan Panel son gratis. Son 30 cupos y los verificamos contigo.</div>`;
     else if (caldas) h += `<div class="regalo">🎁 En Caldas tienes 6 meses gratis del plan Panel (Conversa no entra en la oferta).</div>`;
     else h += `<div class="regalo">🎁 Empiezas con 15 días gratis, sin tarjeta${modo === "conversa" ? " (la prueba trae todo menos Flow)" : ""}.</div>`;
+    const porNoche = +$("#kNoc").value, vacias = +$("#kVac").value;
+    if (kModo === "vacias" && porNoche > 0) {
+      const n = Math.max(1, Math.ceil(mensual / porNoche));
+      const pct = vacias > 0 ? Math.min(100, (n / vacias) * 100) : 100;
+      h += `<div class="medidor"><div class="t"><span>¿Cuándo se paga solo?</span><span>${n} ${n === 1 ? "noche" : "noches"} más/mes</span></div><div class="riel"><i style="width:${pct}%"></i></div><p>Cada noche que llenas te deja ${peso(porNoche)}. Con <b>${n} ${n === 1 ? "noche más" : "noches más"} al mes</b>, el plan se paga solo.</p></div>`;
+    }
     const porReserva = (+$("#kVal").value) * (+$("#kCom").value) / 100;
-    if (porReserva > 0) {
+    if (kModo === "otas" && porReserva > 0) {
       const n = Math.max(1, Math.ceil(mensual / porReserva));
       const tiene = +$("#kRes").value;
       const pct = tiene > 0 ? Math.min(100, (tiene / n) * 100) : 0;
