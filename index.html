@@ -156,6 +156,35 @@
   .respuesta{margin-top:14px;min-height:56px;font-size:17px;line-height:1.5;color:var(--noche);max-width:900px}
   .respuesta b{color:var(--terra)}
 
+  /* ================= 3 · más huéspedes ================= */
+  .clientes{display:grid;grid-template-columns:1.2fr .8fr;gap:26px;margin-top:20px;align-items:start}
+  .canales{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .canales .acc{padding:11px 14px}
+  .canales .acc.on{border-color:var(--verde);background:#F3FBF6}
+  .canales .acc.on .ic{box-shadow:0 0 0 2px var(--verde)}
+  .explica{margin-top:12px;min-height:66px;font-size:15.5px;line-height:1.5;color:var(--noche);background:#fff;border:1px dashed var(--borde);border-radius:14px;padding:12px 16px}
+  .explica b{color:var(--terra)}
+  .tu-parte{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:12px;font-size:13.5px;color:var(--gris)}
+  .tu-parte b{color:var(--noche);margin-right:2px}
+  .tu-parte span{background:var(--arena);border-radius:999px;padding:6px 12px;font-weight:700}
+  .feed{padding:16px 18px}
+  .feed .cab{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+  .feed .cab small{display:block;color:var(--tenue);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px}
+  .feed .cab b{font-size:16px;color:var(--noche)}
+  .feed .num{font-size:38px;font-weight:800;letter-spacing:-1px;color:var(--verde);line-height:1;font-variant-numeric:tabular-nums}
+  .feed ul{list-style:none;margin-top:12px;display:flex;flex-direction:column;gap:7px;max-height:min(230px,calc(100vh - 560px));min-height:120px;overflow-y:auto}
+  .feed li{display:flex;gap:10px;align-items:center;border:1px solid var(--borde);border-radius:12px;padding:8px 12px;font-size:13px;animation:entra .5s var(--ease) both}
+  .feed li > i{width:10px;height:10px;border-radius:5px;flex-shrink:0}
+  .feed li span:nth-child(2){flex:1}
+  .feed li b{display:block;font-size:13.5px}
+  .feed li small{color:var(--tenue)}
+  .feed .vacio{color:var(--tenue);font-size:14px;line-height:1.5;padding:22px 6px;text-align:center;border:1px dashed var(--borde);border-radius:12px}
+  .feed .pie-f{display:flex;justify-content:space-between;align-items:center;margin-top:10px}
+  .feed .pie-f button{background:none;border:none;color:var(--azul);font-weight:700;font-size:12.5px}
+  .caso{margin-top:12px;padding:14px 18px;background:var(--noche);color:#dce8ef;border-radius:18px;font-size:14px;line-height:1.5}
+  .caso b{color:var(--crema)}
+  .caso small{display:block;color:#9fb6c4;font-size:11.5px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:4px}
+
   /* ================= ventana de la app ================= */
   .app{display:grid;grid-template-columns:186px 1fr;background:var(--app);height:100%;font-size:13px;color:var(--tinta)}
   .app.chica{grid-template-columns:1fr}
@@ -472,7 +501,7 @@
   @media (max-width:980px){
     body{overflow:auto}
     .dia{padding:76px 18px 96px;justify-content:flex-start}
-    .apertura .rejilla,.cierre .rejilla,.dos,.tres,.controles,.escenario,.franca,.faq,.panel-p .rejilla{grid-template-columns:1fr}
+    .clientes,.canales,.apertura .rejilla,.cierre .rejilla,.dos,.tres,.controles,.escenario,.franca,.faq,.panel-p .rejilla{grid-template-columns:1fr}
     .vitrina{display:none}
     .kpis,.pasos,.planes{grid-template-columns:1fr 1fr}
     .linea-t{grid-template-columns:repeat(5,minmax(60px,1fr));overflow-x:auto}
@@ -585,8 +614,30 @@
       <button data-r="Tu <b>propia página</b> con motor de reservas: lo que vendes ahí es 100 % tuyo, <b>cero comisión</b>.">Pago mucha comisión</button>
       <button data-r="Los datos del huésped se toman <b>una sola vez</b> en el check-in; los reportes TRA y SIRE te muestran lo pendiente y te avisamos antes de que venza el RNT.">El TRA y el SIRE me quitan horas</button>
       <button data-r="Con el plan Conversa, <b>Flow</b> responde a cualquier hora, mira qué está libre y cotiza con tus tarifas.">No doy abasto con el WhatsApp</button>
+      <button data-r="Es lo que más nos preguntan. En la siguiente te muestro <b>cómo te encuentran, te escriben y reservan</b> más huéspedes: tu página, Google, Booking y Airbnb, y Flow.">Tengo pocas reservas</button>
     </div>
     <div class="respuesta" id="respuesta"></div>
+  </section>
+
+  <!-- 3 · MÁS HUÉSPEDES -->
+  <section class="dia" data-cap="Más huéspedes" data-tit="Cómo te llegan más clientes" data-nota="<b>1 min 30 s.</b> Antes de tocar nada pregunta: «¿por dónde te llegan hoy las reservas?». Toca solo los canales que hoy <b>no</b> usa: cada uno suma una reserva de ejemplo. Cierra con el caso de León Dormido y con «tu parte»: si no comparte el enlace, no llega nadie. No prometas cifras.">
+    <div class="rotulo e e1">Más huéspedes</div>
+    <h2 class="e e2">Más reservas para <span class="acento" data-v="aloj">tu alojamiento</span>: te encuentran, te escriben y reservan</h2>
+    <div class="clientes">
+      <div class="e e3">
+        <div class="canales" id="canales"></div>
+        <div class="explica" id="explica">Toca por dónde te puede llegar un huésped que hoy <b>se te está yendo</b>.</div>
+        <div class="tu-parte"><b>Tu parte, 5 minutos:</b><span>el enlace en tu Instagram</span><span>en tu perfil de Google</span><span>cada vez que te pidan precio</span></div>
+      </div>
+      <div class="e e4">
+        <div class="tarjeta feed">
+          <div class="cab"><div><small>Reservas nuevas · ejemplo</small><b data-v="aloj">tu alojamiento</b></div><div class="num" id="fNum">0</div></div>
+          <ul id="feed"></ul>
+          <div class="pie-f"><span class="mini">Todas caen al mismo calendario, sin cruces.</span><button id="fReset">Empezar de nuevo</button></div>
+        </div>
+        <div class="caso"><small>Caso real · Manizales</small><b>Glamping León Dormido</b> trabaja con nosotros: recibe miles de solicitudes de reserva y cotización al mes, su ocupación es muy alta y hay reservas que llegan con 1 y 2 meses de anticipación.</div>
+      </div>
+    </div>
   </section>
 
   <!-- 3 · CALENDARIO -->
@@ -855,7 +906,7 @@
     const utm = "utm_source=demo&utm_medium=presentacion";
     $("#ctaCrear").href = "https://hoteles.desarrollandoando.com/crear-cuenta?" + utm;
     $("#ctaAgendar").href = "https://hoteles.desarrollandoando.com/agendar?" + utm;
-    armarCalendario(); armarSitio(); precio();
+    armarCalendario(); armarClientes(); armarSitio(); precio();
   }
 
   // ---------- Navegación y sincronía con el presentador ----------
@@ -1050,6 +1101,45 @@
     }
     a.className = "aviso mal"; a.textContent = "No hay otra habitación libre esas noches: no se puede mover.";
   };
+
+  // ---------- 3 · Más huéspedes (solo funciones que ya existen; sin cifras) ----------
+  const CANALES = [
+    { k: "insta", ic: "📲", f: "#FCE8EF", t: "Desde tu Instagram", s: "El enlace de tu página en la bio", o: "pagina", origen: "Instagram → tu página", sello: "0 % comisión",
+      x: () => "Pones el enlace de tu página en la bio y en tus historias. Quien te descubre <b>ve qué está libre y reserva ahí mismo</b>, sin esperar a que le contestes." },
+    { k: "google", ic: "🔎", f: "#EAF0FD", t: "Desde Google", s: "Tu web con tu nombre y tu dirección", o: "pagina", origen: "Google → tu web", sello: "0 % comisión",
+      x: () => `Tu web propia va en tu perfil de Google Maps. Quien busca dónde quedarse en ${esc(datos.ciudad || "tu zona")} y te encuentra, <b>entra a tu web y reserva</b>. Pocos alojamientos tienen esa carta de presentación.` },
+    { k: "ota", ic: "🌍", f: "#EEF2FF", t: "Desde Booking y Airbnb", s: "Más vitrinas, sin reservas dobles", o: "booking", origen: "Booking", sello: "Sin cruces",
+      x: () => "Con el channel manager publicas en Booking y Airbnb sin miedo: todo cae al mismo calendario y nunca se cruza. <b>Más vitrinas, más gente que te ve</b>, y abres todas tus fechas." },
+    { k: "noche", ic: "🌙", f: "#FDF0E1", t: "A las 11 de la noche", s: "Flow contesta y cotiza al instante", o: "wa", origen: "WhatsApp · Flow", sello: "Lista para confirmar",
+      x: () => "El que escribe tarde y nadie le contesta, reserva en otro lado. Con el plan Conversa, <b>Flow responde al instante</b> con tu disponibilidad y tus tarifas, y te deja la reserva lista." },
+    { k: "vuelve", ic: "🎁", f: "#E7F6EC", t: "Huéspedes que vuelven", s: "Cupones y tarjetas de regalo", o: "pagina", origen: "Cupón → tu página", sello: "Huésped que vuelve",
+      x: () => "Al que se va le das un <b>cupón para su próxima visita</b>, y vendes <b>tarjetas de regalo</b> para que te regalen a otros. Un huésped contento te trae más." },
+    { k: "ingles", ic: "✈️", f: "#F2ECFB", t: "Turistas extranjeros", s: "Tu página también en inglés", o: "pagina", origen: "Turista · página en inglés", sello: "0 % comisión",
+      x: () => "Tu página y el check-in también salen <b>en inglés</b>: el turista extranjero entiende, reserva y llena sus datos sin traductor." },
+  ];
+  let llegadas = [];
+  function armarClientes() {
+    $("#canales").innerHTML = CANALES.map((c) => `<button class="acc" data-k="${c.k}"><span class="ic" style="background:${c.f}">${c.ic}</span><span><b>${c.t}</b><small>${c.s}</small></span></button>`).join("");
+    $$("#canales .acc").forEach((b) => (b.onclick = () => llega(b.dataset.k)));
+    llegadas = [];
+    pintarFeed();
+    $("#explica").innerHTML = "Toca por dónde te puede llegar un huésped que hoy <b>se te está yendo</b>.";
+  }
+  function llega(k) {
+    const c = CANALES.find((x) => x.k === k), uns = nombresUnidades();
+    $("#explica").innerHTML = c.x();
+    $(`#canales .acc[data-k="${k}"]`).classList.add("on");
+    llegadas.unshift({ c, u: uns[llegadas.length % uns.length], n: 2 + (llegadas.length % 3) });
+    pintarFeed();
+  }
+  function pintarFeed() {
+    const ul = $("#feed");
+    ul.innerHTML = llegadas.length
+      ? llegadas.map((l) => `<li><i style="background:${color[l.c.o]}"></i><span><b>${esc(l.u)} · ${l.n} noches</b><small>${l.c.origen}</small></span><span class="pill" style="background:#E7F6EC;color:var(--li-t)">${l.c.sello}</span></li>`).join("")
+      : `<li class="vacio" style="animation:none;border:none;padding:0;display:block"><div class="vacio">Aquí van cayendo las reservas<br>que hoy no te llegan.</div></li>`;
+    $("#fNum").textContent = llegadas.length;
+  }
+  $("#fReset").onclick = () => { $$("#canales .acc").forEach((b) => b.classList.remove("on")); llegadas = []; pintarFeed(); $("#explica").innerHTML = "Toca por dónde te puede llegar un huésped que hoy <b>se te está yendo</b>."; };
 
   // ---------- 4 · Página propia ----------
   const paisaje = (c1, c2, c3, sol) => `<svg viewBox="0 0 300 150" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${c1}"/><stop offset="1" stop-color="${c2}"/></linearGradient></defs><rect width="300" height="150" fill="url(#g)"/><circle cx="228" cy="48" r="20" fill="${sol}" opacity=".9"/><path d="M0 110 L60 60 L105 95 L160 45 L215 92 L255 70 L300 100 V150 H0Z" fill="${c3}" opacity=".55"/><path d="M0 128 L50 100 L95 120 L150 90 L210 125 L260 105 L300 122 V150 H0Z" fill="${c3}"/><path d="M236 112 l14 -14 l14 14 z" fill="#fff" opacity=".9"/><rect x="241" y="112" width="18" height="10" fill="#fff" opacity=".9"/></svg>`;
